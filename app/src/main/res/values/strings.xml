@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Smart Food Assistant</string>
+    <string name="title_recipes">Recipes</string>
+    <string name="title_products">Products</string>
 </resources>
