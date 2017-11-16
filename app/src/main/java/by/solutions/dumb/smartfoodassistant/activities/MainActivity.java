@@ -22,28 +22,6 @@ public class MainActivity extends AppCompatActivity {
     private ProductsFragment productsFragment;
     private RecipesFragment recipesFragment;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    switch (item.getItemId()) {
-                        case R.id.navigation_recipes:
-                            if (currentPageId != R.id.navigation_recipes) {
-                                currentPageId = R.id.navigation_recipes;
-                                changeFragments(recipesFragment,productsFragment);
-                            }
-                            return true;
-                        case R.id.navigation_products:
-                            if (currentPageId != R.id.navigation_products) {
-                                currentPageId = R.id.navigation_products;
-                                changeFragments(productsFragment, recipesFragment);
-                            }
-                            return true;
-                    }
-                    return false;
-                }
-            };
-
     //endregion
 
 
@@ -64,7 +42,26 @@ public class MainActivity extends AppCompatActivity {
         hideFragment(productsFragment);
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationBar);
-        bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.navigation_recipes:
+                        if (currentPageId != R.id.navigation_recipes) {
+                            currentPageId = R.id.navigation_recipes;
+                            changeFragments(recipesFragment,productsFragment);
+                        }
+                        return true;
+                    case R.id.navigation_products:
+                        if (currentPageId != R.id.navigation_products) {
+                            currentPageId = R.id.navigation_products;
+                            changeFragments(productsFragment, recipesFragment);
+                        }
+                        return true;
+                }
+                return false;
+            }
+        });
     }
 
     //endregion
