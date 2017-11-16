@@ -1,15 +1,28 @@
 package by.solutions.dumb.smartfoodassistant.containers;
 
 public class Product {
+
+    //region Variables
+
     private String name;
     private String currency;
     private double price;
+
+    //endregion
+
+
+    //region Constructors
 
     public Product(String name, String currency, double price) {
         this.name = name;
         this.currency = currency;
         this.price = price;
     }
+
+    //endregion
+
+
+    //region Getters
 
     public String getName() {
         return name;
@@ -23,6 +36,11 @@ public class Product {
         return currency;
     }
 
+    //endregion
+
+
+    //region Setters
+
     public void setName(String name) {
         this.name = name;
     }
@@ -34,4 +52,6 @@ public class Product {
     public void setCurrency(String currency) {
         this.currency = currency;
     }
+
+    //endregion
 }

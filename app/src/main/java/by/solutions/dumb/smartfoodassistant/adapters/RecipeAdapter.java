@@ -11,26 +11,25 @@ import android.widget.TextView;
 import java.util.List;
 
 import by.solutions.dumb.smartfoodassistant.R;
-import by.solutions.dumb.smartfoodassistant.containers.Product;
+import by.solutions.dumb.smartfoodassistant.containers.Recipe;
 
 
-public class ProductAdapter extends ArrayAdapter<Product> {
-
+public class RecipeAdapter extends ArrayAdapter<Recipe> {
 
     //region Variables
 
     private LayoutInflater inflater;
     private int layout;
-    private List<Product> products;
+    private List<Recipe> recipes;
 
     //endregion
 
 
     //region Constructors
 
-    public ProductAdapter(Context context, int resource, List<Product> products) {
-        super(context, resource, products);
-        this.products = products;
+    public RecipeAdapter(Context context, int resource, List<Recipe> recipes) {
+        super(context, resource, recipes);
+        this.recipes = recipes;
         this.layout = resource;
         this.inflater = LayoutInflater.from(context);
     }
@@ -43,15 +42,10 @@ public class ProductAdapter extends ArrayAdapter<Product> {
     @Override
     public @NonNull View getView(int position, View convertView, @NonNull ViewGroup parent) {
         View view = inflater.inflate(this.layout, parent, false);
-        TextView nameView = view.findViewById(R.id.product_name);
-        TextView priceView = view.findViewById(R.id.product_price);
-        TextView currencyView = view.findViewById(R.id.product_currency);
-        Product product = products.get(position);
+        TextView nameView = view.findViewById(R.id.recipe_name);
+        Recipe recipe = recipes.get(position);
 
-        nameView.setText(product.getName());
-        priceView.setText(Double.toString(product.getPrice()));
-
-        currencyView.setText(product.getCurrency());
+        nameView.setText(recipe.getName());
 
         return view;
     }

@@ -4,10 +4,11 @@
     android:layout_height="match_parent">
 
     <ListView
-        android:id="@+id/products_list"
+        android:id="@+id/recipes_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:dividerHeight="1dp"
         android:background="@color/listBackgroundColor">
     </ListView>
+
 </android.support.constraint.ConstraintLayout>
