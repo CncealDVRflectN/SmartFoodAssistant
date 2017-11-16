@@ -6,6 +6,11 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
+import android.widget.ListView;
+import java.util.ArrayList;
+import java.util.List;
+import by.solutions.dumb.smartfoodassistant.adapters.ProductAdapter;
+import by.solutions.dumb.smartfoodassistant.containers.Product;
 
 public class MainActivity extends AppCompatActivity {
 

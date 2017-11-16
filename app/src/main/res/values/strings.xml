@@ -2,4 +2,7 @@
     <string name="app_name">Smart Food Assistant</string>
     <string name="title_recipes">Recipes</string>
     <string name="title_products">Products</string>
+    <string name="product_name">Название</string>
+    <string name="product_price">Цена</string>
+    <string name="product_currency">Валюта</string>
 </resources>
