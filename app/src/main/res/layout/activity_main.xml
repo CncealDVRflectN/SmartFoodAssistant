@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    tools:context="by.solutions.dumb.smartfoodassistant.MainActivity">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="by.solutions.dumb.smartfoodassistant.activities.MainActivity">
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottomNavigationBar"
@@ -16,9 +17,10 @@
         app:menu="@menu/navigation_menu"
         />
 
-    <fragment
-        android:id="@+id/main_fragment"
-        android:name="by.solutions.dumb.smartfoodassistant.ProductsFragment"
+    <FrameLayout
+        android:id="@+id/main_fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigationBar"
+        />
 </android.support.constraint.ConstraintLayout>
