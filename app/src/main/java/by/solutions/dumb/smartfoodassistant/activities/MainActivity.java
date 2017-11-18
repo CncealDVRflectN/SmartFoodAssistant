@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import by.solutions.dumb.smartfoodassistant.fragments.ProductsFragment;
@@ -49,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.navigation_recipes:
                         if (currentPageId != R.id.navigation_recipes) {
                             currentPageId = R.id.navigation_recipes;
-                            changeFragments(recipesFragment,productsFragment);
+                            changeFragments(recipesFragment, productsFragment);
                         }
                         return true;
                     case R.id.navigation_products:
@@ -62,6 +64,29 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_activity_toolbar_actions, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                System.out.println("Text submitted: " + query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                System.out.println("Text changed: " + newText);
+                return false;
+            }
+        });
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     //endregion

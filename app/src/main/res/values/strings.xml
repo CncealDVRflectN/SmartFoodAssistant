@@ -6,4 +6,5 @@
     <string name="product_price">Цена</string>
     <string name="product_currency">Валюта</string>
     <string name="recipe_name">Название рецепта</string>
+    <string name="action_search">Поиск</string>
 </resources>

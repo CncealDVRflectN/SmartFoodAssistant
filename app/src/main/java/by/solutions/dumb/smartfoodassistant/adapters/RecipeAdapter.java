@@ -40,7 +40,8 @@ public class RecipeAdapter extends ArrayAdapter<Recipe> {
     //region ArrayAdapter methods
 
     @Override
-    public @NonNull View getView(int position, View convertView, @NonNull ViewGroup parent) {
+    public @NonNull
+    View getView(int position, View convertView, @NonNull ViewGroup parent) {
         View view = inflater.inflate(this.layout, parent, false);
         TextView nameView = view.findViewById(R.id.recipe_name);
         Recipe recipe = recipes.get(position);
