@@ -10,6 +10,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 
@@ -29,6 +31,7 @@ public class RecipesFragment extends Fragment {
 
     private List<Recipe> recipes = new ArrayList<>();
     private ListView recipesList;
+    private RecipeAdapter adapter;
 
     //endregion
 
@@ -46,10 +49,28 @@ public class RecipesFragment extends Fragment {
         View view = inflater.inflate(R.layout.recipes_fragment, container, false);
 
         recipesList = view.findViewById(R.id.recipes_list);
-        RecipeAdapter recipeAdapter = new RecipeAdapter(getActivity().getApplicationContext(), R.layout.recipe, recipes);
-        recipesList.setAdapter(recipeAdapter);
+        adapter = new RecipeAdapter(getActivity().getApplicationContext(), R.layout.recipe, recipes);
+        recipesList.setAdapter(adapter);
 
         return view;
+    }
+
+    //endregion
+
+
+    //region Getters
+
+    public RecipeAdapter getAdapter() {
+        return adapter;
+    }
+
+    //endregion
+
+
+    //region Setters
+
+    public void setAdapter(RecipeAdapter adapter) {
+        this.adapter = adapter;
     }
 
     //endregion

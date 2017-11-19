@@ -1,5 +1,6 @@
 package by.solutions.dumb.smartfoodassistant.activities;
 
+import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -10,7 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 
+import by.solutions.dumb.smartfoodassistant.containers.Recipe;
 import by.solutions.dumb.smartfoodassistant.fragments.ProductsFragment;
 import by.solutions.dumb.smartfoodassistant.R;
 import by.solutions.dumb.smartfoodassistant.fragments.RecipesFragment;
@@ -72,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setMaxWidth(Integer.MAX_VALUE);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -82,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 System.out.println("Text changed: " + newText);
+                recipesFragment.getAdapter().getFilter().filter(newText);
                 return false;
             }
         });
