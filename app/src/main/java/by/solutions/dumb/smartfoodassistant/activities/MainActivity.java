@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
                         if (currentPageId != R.id.navigation_recipes) {
                             currentPageId = R.id.navigation_recipes;
                             changeFragments(recipesFragment, productsFragment);
+                            productsFragment.getAdapter().getFilter().filter("");
                             searchItem.collapseActionView();
                         }
                         return true;
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
                         if (currentPageId != R.id.navigation_products) {
                             currentPageId = R.id.navigation_products;
                             changeFragments(productsFragment, recipesFragment);
+                            recipesFragment.getAdapter().getFilter().filter("");
                             searchItem.collapseActionView();
                         }
                         return true;
