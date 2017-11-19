@@ -12,9 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import by.solutions.dumb.smartfoodassistant.R;
-import by.solutions.dumb.smartfoodassistant.adapters.ProductAdapter;
 import by.solutions.dumb.smartfoodassistant.adapters.RecipeAdapter;
-import by.solutions.dumb.smartfoodassistant.containers.Product;
+import by.solutions.dumb.smartfoodassistant.containers.Container;
 import by.solutions.dumb.smartfoodassistant.containers.Recipe;
 
 
@@ -22,8 +21,9 @@ public class RecipesFragment extends Fragment {
 
     //region Variables
 
-    private List<Recipe> recipes = new ArrayList<>();
+    private List<Container> recipes = new ArrayList<>();
     private ListView recipesList;
+    private RecipeAdapter adapter;
 
     //endregion
 
@@ -41,10 +41,28 @@ public class RecipesFragment extends Fragment {
         View view = inflater.inflate(R.layout.recipes_fragment, container, false);
 
         recipesList = view.findViewById(R.id.recipes_list);
-        RecipeAdapter recipeAdapter = new RecipeAdapter(getActivity().getApplicationContext(), R.layout.recipe, recipes);
-        recipesList.setAdapter(recipeAdapter);
+        adapter = new RecipeAdapter(getActivity().getApplicationContext(), R.layout.recipe, recipes);
+        recipesList.setAdapter(adapter);
 
         return view;
+    }
+
+    //endregion
+
+
+    //region Getters
+
+    public RecipeAdapter getAdapter() {
+        return adapter;
+    }
+
+    //endregion
+
+
+    //region Setters
+
+    public void setAdapter(RecipeAdapter adapter) {
+        this.adapter = adapter;
     }
 
     //endregion
