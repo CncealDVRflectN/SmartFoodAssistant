@@ -10,11 +10,12 @@ import java.util.List;
 
 import by.solutions.dumb.smartfoodassistant.R;
 import by.solutions.dumb.smartfoodassistant.adapters.ProductAdapter;
+import by.solutions.dumb.smartfoodassistant.containers.Container;
 import by.solutions.dumb.smartfoodassistant.containers.Product;
 
 
 public class ShopActivity extends AppCompatActivity {
-    private List<Product> products = new ArrayList<>();
+    private List<Container> products = new ArrayList<>();
     private ListView productsView;
 
     @Override
