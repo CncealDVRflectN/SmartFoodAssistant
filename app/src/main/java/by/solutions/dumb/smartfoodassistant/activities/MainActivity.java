@@ -1,6 +1,5 @@
 package by.solutions.dumb.smartfoodassistant.activities;
 
-import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -11,11 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
 
-import by.solutions.dumb.smartfoodassistant.containers.Recipe;
-import by.solutions.dumb.smartfoodassistant.fragments.ProductsFragment;
 import by.solutions.dumb.smartfoodassistant.R;
+import by.solutions.dumb.smartfoodassistant.fragments.ProductsFragment;
 import by.solutions.dumb.smartfoodassistant.fragments.RecipesFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private FragmentManager fragmentManager;
     private ProductsFragment productsFragment;
     private RecipesFragment recipesFragment;
+    MenuItem searchItem;
 
     //endregion
 
@@ -46,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         addFragment(R.id.main_fragment_container, productsFragment);
         hideFragment(productsFragment);
 
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationBar);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationBar);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -55,12 +53,14 @@ public class MainActivity extends AppCompatActivity {
                         if (currentPageId != R.id.navigation_recipes) {
                             currentPageId = R.id.navigation_recipes;
                             changeFragments(recipesFragment, productsFragment);
+                            searchItem.collapseActionView();
                         }
                         return true;
                     case R.id.navigation_products:
                         if (currentPageId != R.id.navigation_products) {
                             currentPageId = R.id.navigation_products;
                             changeFragments(productsFragment, recipesFragment);
+                            searchItem.collapseActionView();
                         }
                         return true;
                 }
@@ -72,21 +72,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_activity_toolbar_actions, menu);
-
-        MenuItem searchItem = menu.findItem(R.id.action_search);
+        searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
         searchView.setMaxWidth(Integer.MAX_VALUE);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                System.out.println("Text submitted: " + query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                System.out.println("Text changed: " + newText);
-                recipesFragment.getAdapter().getFilter().filter(newText);
+                if (currentPageId == R.id.navigation_recipes) {
+                    recipesFragment.getAdapter().getFilter().filter(newText);
+                } else if (currentPageId == R.id.navigation_products) {
+                    productsFragment.getAdapter().getFilter().filter(newText);
+                }
                 return false;
             }
         });

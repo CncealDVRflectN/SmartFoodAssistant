@@ -3,25 +3,17 @@ package by.solutions.dumb.smartfoodassistant.fragments;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.view.MenuItemCompat;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.SearchView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import by.solutions.dumb.smartfoodassistant.R;
-import by.solutions.dumb.smartfoodassistant.adapters.ProductAdapter;
 import by.solutions.dumb.smartfoodassistant.adapters.RecipeAdapter;
-import by.solutions.dumb.smartfoodassistant.containers.Product;
+import by.solutions.dumb.smartfoodassistant.containers.Container;
 import by.solutions.dumb.smartfoodassistant.containers.Recipe;
 
 
@@ -29,7 +21,7 @@ public class RecipesFragment extends Fragment {
 
     //region Variables
 
-    private List<Recipe> recipes = new ArrayList<>();
+    private List<Container> recipes = new ArrayList<>();
     private ListView recipesList;
     private RecipeAdapter adapter;
 

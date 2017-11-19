@@ -13,6 +13,7 @@ import java.util.List;
 
 import by.solutions.dumb.smartfoodassistant.R;
 import by.solutions.dumb.smartfoodassistant.adapters.ProductAdapter;
+import by.solutions.dumb.smartfoodassistant.containers.Container;
 import by.solutions.dumb.smartfoodassistant.containers.Product;
 
 
@@ -20,8 +21,9 @@ public class ProductsFragment extends Fragment {
 
     //region Variables
 
-    private List<Product> products = new ArrayList<>();
+    private List<Container> products = new ArrayList<>();
     private ListView productsList;
+    private ProductAdapter adapter;
 
     //endregion
 
@@ -39,10 +41,28 @@ public class ProductsFragment extends Fragment {
         View view = inflater.inflate(R.layout.products_fragment, container, false);
 
         productsList = view.findViewById(R.id.products_list);
-        ProductAdapter productAdapter = new ProductAdapter(getActivity().getApplicationContext(), R.layout.product, products);
-        productsList.setAdapter(productAdapter);
+        adapter = new ProductAdapter(getActivity().getApplicationContext(), R.layout.product, products);
+        productsList.setAdapter(adapter);
 
         return view;
+    }
+
+    //endregion
+
+
+    //region Getters
+
+    public ProductAdapter getAdapter() {
+        return adapter;
+    }
+
+    //endregion
+
+
+    //region Setters
+
+    public void setAdapter(ProductAdapter adapter) {
+        this.adapter = adapter;
     }
 
     //endregion

@@ -1,6 +1,6 @@
 package by.solutions.dumb.smartfoodassistant.containers;
 
-public class Product {
+public class Product implements Container {
 
     //region Variables
 
@@ -24,6 +24,7 @@ public class Product {
 
     //region Getters
 
+    @Override
     public String getName() {
         return name;
     }
