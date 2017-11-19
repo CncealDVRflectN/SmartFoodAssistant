@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="15dp">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
         style="@style/ProductList"
-        android:id="@+id/product_name"
+        android:id="@+id/shop_name"
         android:text="@string/product_name"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -27,4 +25,13 @@
         android:text="@string/product_currency"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/shop_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/shop_address"
+        android:textColor="@color/listTextColor"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/shop_name"/>
 </android.support.constraint.ConstraintLayout>

@@ -23,6 +23,7 @@ public class ProductAdapter extends ArrayAdapter<Container> implements Refreshab
     //region Variables
 
     private LayoutInflater inflater;
+
     private int layout;
     private List<Container> products;
     private ContainerListFilter filter;
@@ -47,6 +48,7 @@ public class ProductAdapter extends ArrayAdapter<Container> implements Refreshab
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         ViewHolder viewHolder;
         if (convertView == null) {
             convertView = inflater.inflate(this.layout, parent, false);
@@ -100,6 +102,7 @@ public class ProductAdapter extends ArrayAdapter<Container> implements Refreshab
 
 
     //region Nested classes
+
 
     private static class ViewHolder {
         TextView nameView;
