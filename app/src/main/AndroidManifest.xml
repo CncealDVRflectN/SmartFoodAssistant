@@ -19,6 +19,9 @@
         <activity android:name=".activities.ProductActivity">
 
         </activity>
+        <activity android:name=".activities.ShopActivity">
+
+        </activity>
     </application>
 
 </manifest>

@@ -15,8 +15,8 @@ import by.solutions.dumb.smartfoodassistant.containers.Product;
 
 public class ProductAdapter extends ArrayAdapter<Product> {
     private LayoutInflater inflater;
-    private int layout;
     private List<Product> products;
+    private int layout;
 
     public ProductAdapter(Context context, int resource, List<Product> products) {
         super(context, resource, products);

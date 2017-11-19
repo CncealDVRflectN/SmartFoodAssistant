@@ -4,4 +4,6 @@
     <string name="product_price">Цена</string>
     <string name="product_currency">Валюта</string>
     <string name="shop_address">Адрес</string>
+    <string name="shop_name">Магазин</string>
+    <string name="address">Адрес</string>
 </resources>
