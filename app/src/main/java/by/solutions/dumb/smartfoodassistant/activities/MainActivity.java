@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private ProductsFragment productsFragment;
     private RecipesFragment recipesFragment;
     MenuItem searchItem;
+    ActionBar actionBar;
 
     //endregion
 
@@ -43,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
         addFragment(R.id.main_fragment_container, recipesFragment);
         addFragment(R.id.main_fragment_container, productsFragment);
         hideFragment(productsFragment);
+        actionBar = getSupportActionBar();
+        actionBar.setTitle(R.string.title_recipes);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationBar);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -55,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
                             changeFragments(recipesFragment, productsFragment);
                             productsFragment.getAdapter().getFilter().filter("");
                             searchItem.collapseActionView();
+                            actionBar.setTitle(R.string.title_recipes);
                         }
                         return true;
                     case R.id.navigation_products:
@@ -63,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
                             changeFragments(productsFragment, recipesFragment);
                             recipesFragment.getAdapter().getFilter().filter("");
                             searchItem.collapseActionView();
+                            actionBar.setTitle(R.string.title_products);
                         }
                         return true;
                 }

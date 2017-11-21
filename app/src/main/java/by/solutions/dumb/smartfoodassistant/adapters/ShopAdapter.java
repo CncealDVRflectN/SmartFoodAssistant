@@ -14,9 +14,17 @@ import by.solutions.dumb.smartfoodassistant.containers.Shop;
 
 
 public class ShopAdapter extends ArrayAdapter {
+
+    //region Variables
+
     private LayoutInflater inflater;
     private List<Shop> shops;
     private int layout;
+
+    //endregion
+
+
+    //region Constructors
 
     public ShopAdapter(Context context, int resource, List<Shop> shops) {
         super(context, resource, shops);
@@ -24,6 +32,11 @@ public class ShopAdapter extends ArrayAdapter {
         this.layout = resource;
         this.inflater = LayoutInflater.from(context);
     }
+
+    //endregion
+
+
+    //region ArrayAdapter methods
 
     public View getView(int position, View convertView, ViewGroup parent) {
         TextView nameView;
@@ -49,4 +62,6 @@ public class ShopAdapter extends ArrayAdapter {
 
         return convertView;
     }
+
+    //endregion
 }

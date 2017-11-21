@@ -2,11 +2,11 @@ package by.solutions.dumb.smartfoodassistant.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,12 +17,20 @@ import by.solutions.dumb.smartfoodassistant.containers.Shop;
 
 
 public class ProductActivity extends AppCompatActivity {
+
+    //region Variables
+
     private List<Shop> shops = new ArrayList<>();
     private ListView shopsView;
+    private ActionBar actionBar;
+
+    //endregion
+
+
+    //region Activity lifecycle
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        TextView productName;
         ShopAdapter shopAdapter;
         AdapterView.OnItemClickListener itemListener;
 
@@ -31,10 +39,12 @@ public class ProductActivity extends AppCompatActivity {
 
         testInitial();
         shopsView = findViewById(R.id.shops_list);
-        productName = findViewById(R.id.product_name);
         shopAdapter = new ShopAdapter(this, R.layout.shop, shops);
         shopsView.setAdapter(shopAdapter);
-        productName.setText(getIntent().getStringExtra("productName"));
+        actionBar = getSupportActionBar();
+        actionBar.setTitle(getIntent().getStringExtra("productName"));
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         itemListener = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -50,9 +60,22 @@ public class ProductActivity extends AppCompatActivity {
         shopsView.setOnItemClickListener(itemListener);
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
+
+    //endregion
+
+
+    //region Public methods
+
     private void testInitial() {
         shops.add(new Shop("Гипермаркет", "ул. Нигде 43", "USD", 2342));
         shops.add(new Shop("Супермаркет", "ул. Здесь 23", "USD", 4563));
         shops.add(new Shop("Магазин", "ул. Там 45", "USD", 4353));
     }
+
+    //endregion
 }
