@@ -34,7 +34,6 @@ public class ContainerListFilter extends Filter {
 
     @Override
     protected FilterResults performFiltering(CharSequence constraint) {
-
         String filterString = constraint.toString().toLowerCase();
 
         FilterResults results = new FilterResults();
@@ -64,7 +63,6 @@ public class ContainerListFilter extends Filter {
     protected void publishResults(CharSequence constraint, FilterResults results) {
         filteredData = (ArrayList<Container>) results.values;
         adapter.refreshData(filteredData);
-
     }
 
     //endregion
