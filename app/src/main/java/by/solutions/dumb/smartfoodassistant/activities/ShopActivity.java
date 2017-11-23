@@ -37,9 +37,10 @@ public class ShopActivity extends AppCompatActivity {
         setContentView(R.layout.shop_activity);
 
         testInitial();
+        productAdapter = new ProductAdapter(this, R.layout.product, products);
+
         productsView = findViewById(R.id.products_list);
         shopAddress = findViewById(R.id.shop_address);
-        productAdapter = new ProductAdapter(this, R.layout.product, products);
         productsView.setAdapter(productAdapter);
         actionBar = getSupportActionBar();
         actionBar.setTitle(getIntent().getStringExtra("shopName"));

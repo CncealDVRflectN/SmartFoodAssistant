@@ -34,16 +34,15 @@ public class ContainerListFilter extends Filter {
 
     @Override
     protected FilterResults performFiltering(CharSequence constraint) {
-        String filterString = constraint.toString().toLowerCase();
-
-        FilterResults results = new FilterResults();
-
         final List<Container> list = allData;
-
-        int count = list.size();
-        final List<Container> resultList = new ArrayList<>(count);
-
+        final List<Container> resultList;
+        String filterString = constraint.toString().toLowerCase();
+        FilterResults results = new FilterResults();
         Container filterableContainer;
+        int count = list.size();
+
+        resultList = new ArrayList<>(count);
+
 
         for (int i = 0; i < count; i++) {
             filterableContainer = list.get(i);
