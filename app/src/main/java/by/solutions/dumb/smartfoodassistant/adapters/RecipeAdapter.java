@@ -22,9 +22,9 @@ public class RecipeAdapter extends ArrayAdapter<Container> implements Refreshabl
     //region Variables
 
     private LayoutInflater inflater;
-    private int layout;
     private List<Container> recipes;
     private ContainerListFilter filter;
+    private int layout;
 
     //endregion
 
@@ -46,17 +46,14 @@ public class RecipeAdapter extends ArrayAdapter<Container> implements Refreshabl
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder;
+        TextView nameView;
+
         if (convertView == null) {
             convertView = inflater.inflate(this.layout, parent, false);
-            viewHolder = new ViewHolder();
-            viewHolder.nameView = convertView.findViewById(R.id.recipe_name);
-            convertView.setTag(viewHolder);
-        } else {
-            viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.nameView.setText(recipes.get(position).getName());
+        nameView = convertView.findViewById(R.id.recipe_name);
+        nameView.setText(recipes.get(position).getName());
 
         return convertView;
     }

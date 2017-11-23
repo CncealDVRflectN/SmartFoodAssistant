@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/shop_address"
-        android:layout_margin="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:gravity="center"
         android:text="@string/address"
-        android:textSize="18sp"
         android:textColor="@color/listTextColor"
-        app:layout_constraintTop_toBottomOf="@id/shop_name"/>
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/shop_name" />
 
     <ListView
         android:id="@+id/products_list"
-        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:dividerHeight="1dp"
+        android:layout_marginTop="5dp"
         android:background="@color/listBackgroundColor"
-        app:layout_constraintTop_toBottomOf="@id/shop_address"/>
+        android:dividerHeight="1dp"
+        app:layout_constraintTop_toBottomOf="@id/shop_address" />
 
 </android.support.constraint.ConstraintLayout>

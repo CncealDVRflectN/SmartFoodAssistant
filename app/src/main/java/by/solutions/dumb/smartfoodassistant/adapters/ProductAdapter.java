@@ -14,6 +14,7 @@ import java.util.List;
 
 import by.solutions.dumb.smartfoodassistant.R;
 import by.solutions.dumb.smartfoodassistant.containers.Container;
+import by.solutions.dumb.smartfoodassistant.containers.Product;
 import by.solutions.dumb.smartfoodassistant.util.ContainerListFilter;
 
 
@@ -24,9 +25,10 @@ public class ProductAdapter extends ArrayAdapter<Container> implements Refreshab
 
     private LayoutInflater inflater;
 
-    private int layout;
     private List<Container> products;
     private ContainerListFilter filter;
+
+    private int layout;
 
     //endregion
 
@@ -48,19 +50,23 @@ public class ProductAdapter extends ArrayAdapter<Container> implements Refreshab
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        TextView nameView;
+        TextView priceView;
+        TextView currencyView;
+        Product product;
 
-        ViewHolder viewHolder;
         if (convertView == null) {
             convertView = inflater.inflate(this.layout, parent, false);
-            viewHolder = new ViewHolder();
-            viewHolder.nameView = convertView.findViewById(R.id.product_name);
-            viewHolder.priceView = convertView.findViewById(R.id.product_price);
-            viewHolder.currencyView = convertView.findViewById(R.id.product_currency);
-            convertView.setTag(viewHolder);
-        } else {
-            viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.nameView.setText(products.get(position).getName());
+
+        nameView = convertView.findViewById(R.id.product_name);
+        priceView = convertView.findViewById(R.id.product_price);
+        currencyView = convertView.findViewById(R.id.product_currency);
+        product = (Product) products.get(position);
+
+        nameView.setText(product.getName());
+        priceView.setText(Double.toString(product.getPrice()));
+        currencyView.setText(product.getCurrency());
 
         return convertView;
     }

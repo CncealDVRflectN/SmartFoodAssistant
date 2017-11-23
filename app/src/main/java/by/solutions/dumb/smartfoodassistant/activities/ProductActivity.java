@@ -32,7 +32,6 @@ public class ProductActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ShopAdapter shopAdapter;
-        AdapterView.OnItemClickListener itemListener;
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.product_activity);
@@ -45,7 +44,7 @@ public class ProductActivity extends AppCompatActivity {
         actionBar.setTitle(getIntent().getStringExtra("productName"));
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        itemListener = new AdapterView.OnItemClickListener() {
+        shopsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(ProductActivity.this, ShopActivity.class);
@@ -56,8 +55,7 @@ public class ProductActivity extends AppCompatActivity {
 
                 startActivity(intent);
             }
-        };
-        shopsView.setOnItemClickListener(itemListener);
+        });
     }
 
     @Override

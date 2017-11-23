@@ -20,12 +20,13 @@ public class MainActivity extends AppCompatActivity {
 
     //region Variables
 
-    private int currentPageId;
     private FragmentManager fragmentManager;
     private ProductsFragment productsFragment;
     private RecipesFragment recipesFragment;
-    MenuItem searchItem;
-    ActionBar actionBar;
+    private int currentPageId;
+
+    private MenuItem searchItem;
+    private ActionBar actionBar;
 
     //endregion
 
@@ -34,8 +35,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        BottomNavigationView bottomNavigationView;
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        bottomNavigationView = findViewById(R.id.bottomNavigationBar);
 
         fragmentManager = getFragmentManager();
         productsFragment = new ProductsFragment();
@@ -48,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
         actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.title_recipes);
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationBar);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -79,10 +83,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        SearchView searchView;
+
         getMenuInflater().inflate(R.menu.main_activity_toolbar_actions, menu);
         searchItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView = (SearchView) searchItem.getActionView();
         searchView.setMaxWidth(Integer.MAX_VALUE);
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

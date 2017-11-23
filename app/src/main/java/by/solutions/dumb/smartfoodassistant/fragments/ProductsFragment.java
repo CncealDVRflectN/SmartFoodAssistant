@@ -42,14 +42,13 @@ public class ProductsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.products_fragment, container, false);
-        AdapterView.OnItemClickListener itemListener;
 
         productsList = view.findViewById(R.id.products_list);
 
         adapter = new ProductAdapter(getActivity().getApplicationContext(), R.layout.product, products);
         productsList.setAdapter(adapter);
 
-        itemListener = new AdapterView.OnItemClickListener() {
+        productsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getActivity(), ProductActivity.class);
@@ -59,8 +58,7 @@ public class ProductsFragment extends Fragment {
 
                 startActivity(intent);
             }
-        };
-        productsList.setOnItemClickListener(itemListener);
+        });
 
         return view;
     }
