@@ -30,7 +30,6 @@ public class ShopActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        TextView shopAddress;
         ProductAdapter productAdapter;
 
         super.onCreate(savedInstanceState);
@@ -40,11 +39,10 @@ public class ShopActivity extends AppCompatActivity {
         productAdapter = new ProductAdapter(this, R.layout.product, products);
 
         productsView = findViewById(R.id.products_list);
-        shopAddress = findViewById(R.id.shop_address);
         productsView.setAdapter(productAdapter);
         actionBar = getSupportActionBar();
         actionBar.setTitle(getIntent().getStringExtra("shopName"));
-        shopAddress.setText(getIntent().getStringExtra("shopAddress"));
+        actionBar.setSubtitle(getIntent().getStringExtra("shopAddress"));
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
