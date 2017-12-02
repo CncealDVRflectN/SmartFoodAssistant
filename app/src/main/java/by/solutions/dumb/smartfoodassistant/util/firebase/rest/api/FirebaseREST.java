@@ -16,7 +16,7 @@ public class FirebaseREST {
         this.DB_PATH = dbPath.trim();
     }
 
-    public void unpdateSecureToken(String secureToken) {
+    public void updateSecureToken(String secureToken) {
         this.secureToken = secureToken.trim();
     }
 
