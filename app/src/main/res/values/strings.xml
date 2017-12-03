@@ -1,12 +1,19 @@
 <resources>
     <string name="app_name">Smart Food Assistant</string>
+
     <string name="title_recipes">Рецепты</string>
     <string name="title_products">Продукты</string>
+    <string name="title_authentication">Авторизация</string>
+    <string name="title_account">Аккаунт</string>
+
     <string name="product_name">Название продукта</string>
     <string name="product_price">Цена</string>
     <string name="product_currency">Валюта</string>
     <string name="recipe_name">Название рецепта</string>
+
     <string name="action_search">Поиск</string>
+    <string name="action_user">Аккаунт</string>
+
     <string name="shop_address">Адрес</string>
     <string name="shop_name">Магазин</string>
     <string name="address">Адрес</string>

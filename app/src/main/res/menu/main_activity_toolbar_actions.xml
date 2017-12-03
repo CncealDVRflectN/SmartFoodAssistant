@@ -8,4 +8,9 @@
         app:showAsAction="ifRoom|collapseActionView"
         app:actionViewClass="android.support.v7.widget.SearchView" />
 
+    <item android:id="@+id/action_user"
+        android:title="@string/action_user"
+        android:icon="@drawable/ic_user_sign_out_black_24dp"
+        app:showAsAction="ifRoom" />
+
 </menu>

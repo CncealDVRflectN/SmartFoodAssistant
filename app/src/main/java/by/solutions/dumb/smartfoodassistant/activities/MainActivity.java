@@ -3,6 +3,7 @@ package by.solutions.dumb.smartfoodassistant.activities;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -11,6 +12,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import by.solutions.dumb.smartfoodassistant.R;
 import by.solutions.dumb.smartfoodassistant.fragments.ProductsFragment;
@@ -103,6 +107,14 @@ public class MainActivity extends AppCompatActivity {
                 } else if (currentPageId == R.id.navigation_products) {
                     productsFragment.getAdapter().getFilter().filter(newText);
                 }
+                return false;
+            }
+        });
+
+        MenuItem authItem = menu.findItem(R.id.action_user).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                startActivity(new Intent(MainActivity.this, SignInActivity.class));
                 return false;
             }
         });
