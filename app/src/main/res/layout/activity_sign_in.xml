@@ -46,11 +46,4 @@
         app:layout_constraintTop_toBottomOf="@+id/user_info_container"
         android:background="@drawable/google"/>
 
-    <!--<Button-->
-        <!--android:id="@+id/sign_out_button"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--app:layout_constraintTop_toBottomOf="@id/sign_in_button"-->
-        <!--android:text="sign out" />-->
-
 </android.support.constraint.ConstraintLayout>

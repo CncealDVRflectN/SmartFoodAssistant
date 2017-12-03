@@ -1,8 +1,8 @@
 package by.solutions.dumb.smartfoodassistant.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,7 +11,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +49,7 @@ public class SignInActivity extends AppCompatActivity {
     private Button signInButton;
     private ActionBar actionBar;
     private MenuItem signOutItem;
+    private ProgressDialog progressDialog;
 
     //endregion
 
@@ -90,10 +90,16 @@ public class SignInActivity extends AppCompatActivity {
                         Toast.makeText(SignInActivity.this, "Google Services Error", Toast.LENGTH_SHORT).show();
                     }
                 })
-                .addApi(Auth.GOOGLE_SIGN_IN_API,gso)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
         firebaseAuth = FirebaseAuth.getInstance();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        hideProgressDialog();
     }
 
     @Override
@@ -173,6 +179,8 @@ public class SignInActivity extends AppCompatActivity {
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
         Log.d(TAG, "Google user ID: " + account.getId());
 
+        showProgressDialog();
+
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
 
         firebaseAuth.signInWithCredential(credential)
@@ -190,12 +198,13 @@ public class SignInActivity extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
-
+                        hideProgressDialog();
                     }
                 });
     }
 
     private void updateUI(FirebaseUser user) {
+        hideProgressDialog();
         if (user != null) {
             user.getIdToken(true).addOnSuccessListener(new OnSuccessListener<GetTokenResult>() {
                 @Override
@@ -219,6 +228,22 @@ public class SignInActivity extends AppCompatActivity {
             userInfoContainerView.setVisibility(View.GONE);
             signInButton.setVisibility(View.VISIBLE);
             signOutItem.setVisible(false);
+        }
+    }
+
+    private void showProgressDialog() {
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setMessage(getString(R.string.loading));
+            progressDialog.setIndeterminate(true);
+        }
+
+        progressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
         }
     }
 
