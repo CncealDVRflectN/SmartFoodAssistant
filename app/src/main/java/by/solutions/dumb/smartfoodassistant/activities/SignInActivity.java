@@ -2,10 +2,11 @@ package by.solutions.dumb.smartfoodassistant.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,6 +34,7 @@ import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 import by.solutions.dumb.smartfoodassistant.R;
+import by.solutions.dumb.smartfoodassistant.fragments.AuthSignOutDialogFragment;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -40,6 +42,8 @@ public class SignInActivity extends AppCompatActivity {
 
     private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN_GOOGLE = 8841;
+    private static final String TAG_DIALOG_SIGN_OUT = "LogOutDialog";
+
     private FirebaseAuth firebaseAuth;
     private GoogleApiClient googleApiClient;
 
@@ -49,7 +53,11 @@ public class SignInActivity extends AppCompatActivity {
     private Button signInButton;
     private ActionBar actionBar;
     private MenuItem signOutItem;
+
     private ProgressDialog progressDialog;
+    private FragmentManager fragmentManager;
+    AuthSignOutDialogFragment signOutDialog;
+
 
     //endregion
 
@@ -94,6 +102,10 @@ public class SignInActivity extends AppCompatActivity {
                 .build();
 
         firebaseAuth = FirebaseAuth.getInstance();
+
+        fragmentManager = getSupportFragmentManager();
+        signOutDialog = new AuthSignOutDialogFragment();
+        signOutDialog.setSignInActivity(this);
     }
 
     @Override
@@ -132,7 +144,7 @@ public class SignInActivity extends AppCompatActivity {
         signOutItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                signOut();
+                signOutDialog.show(fragmentManager, TAG_DIALOG_SIGN_OUT);
                 return false;
             }
         });
@@ -149,19 +161,6 @@ public class SignInActivity extends AppCompatActivity {
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN_GOOGLE);
-    }
-
-    private void signOut() {
-        firebaseAuth.signOut();
-
-        Auth.GoogleSignInApi.signOut(googleApiClient)
-                .setResultCallback(new ResultCallback<Status>() {
-                    @Override
-                    public void onResult(@NonNull Status status) {
-                        setResult(RESULT_OK);
-                        finish();
-                    }
-                });
     }
 
     private void revokeAccess() {
@@ -245,6 +244,24 @@ public class SignInActivity extends AppCompatActivity {
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
+    }
+
+    //endregion
+
+
+    //region Public methods
+
+    public void signOut() {
+        firebaseAuth.signOut();
+
+        Auth.GoogleSignInApi.signOut(googleApiClient)
+                .setResultCallback(new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(@NonNull Status status) {
+                        setResult(RESULT_OK);
+                        finish();
+                    }
+                });
     }
 
     //endregion

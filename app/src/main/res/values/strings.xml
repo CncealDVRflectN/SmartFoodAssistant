@@ -23,4 +23,9 @@
     <string name="user_id_title">ID:</string>
 
     <string name="loading">Загрузка…</string>
+
+    <string name="sign_out_dialog_title">Выход</string>
+    <string name="sign_out_dialog_message">Вы действительно хотите выйти из аккаунта?</string>
+    <string name="sign_out_dialog_positive">Да</string>
+    <string name="sign_out_dialog_negative">Нет</string>
 </resources>
