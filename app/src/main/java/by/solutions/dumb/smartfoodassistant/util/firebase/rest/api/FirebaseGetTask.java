@@ -34,12 +34,9 @@ class FirebaseGetTask extends AsyncTask<Void, Void, String> {
         try {
             connection = (HttpURLConnection) url.openConnection();
             connection.setDoInput(true);
-            connection.setRequestProperty("Accept-Charset", "utf-8");
-            connection.setRequestProperty("Accept-Language", "ru-RU, en-US");
             connection.setRequestMethod("GET");
             connection.setReadTimeout(10000);
             connection.connect();
-            System.out.println(url.toString());
 
             response.append(connection.getResponseCode());
             response.append(", ");
