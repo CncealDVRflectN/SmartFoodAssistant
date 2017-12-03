@@ -111,7 +111,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        MenuItem authItem = menu.findItem(R.id.action_user).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+        MenuItem authItem = menu.findItem(R.id.action_user);
+        authItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 startActivity(new Intent(MainActivity.this, SignInActivity.class));

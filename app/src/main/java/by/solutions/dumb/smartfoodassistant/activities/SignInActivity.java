@@ -2,12 +2,16 @@ package by.solutions.dumb.smartfoodassistant.activities;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,9 +46,10 @@ public class SignInActivity extends AppCompatActivity {
 
     private TextView userLoginTextView;
     private TextView userIdTextView;
+    private View userInfoContainerView;
     private Button signInButton;
-    private Button signOutButton;
     private ActionBar actionBar;
+    private MenuItem signOutItem;
 
     //endregion
 
@@ -56,10 +61,10 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
+        userInfoContainerView = findViewById(R.id.user_info_container);
         userLoginTextView = findViewById(R.id.user_login);
         userIdTextView = findViewById(R.id.user_id);
         signInButton = findViewById(R.id.sign_in_button);
-        signOutButton = findViewById(R.id.sign_out_button);
         actionBar = getSupportActionBar();
 
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -69,13 +74,6 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 signIn();
-            }
-        });
-
-        signOutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signOut();
             }
         });
 
@@ -99,13 +97,6 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-        updateUI(currentUser);
-    }
-
-    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -124,6 +115,22 @@ public class SignInActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.sign_in_activity_toolbar_actions, menu);
+        signOutItem = menu.findItem(R.id.action_sign_out);
+        signOutItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                signOut();
+                return false;
+            }
+        });
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        updateUI(currentUser);
+        return super.onCreateOptionsMenu(menu);
     }
 
     //endregion
@@ -197,19 +204,17 @@ public class SignInActivity extends AppCompatActivity {
             userLoginTextView.setText(user.getEmail());
             userIdTextView.setText(user.getUid());
 
-            userLoginTextView.setVisibility(View.VISIBLE);
-            userIdTextView.setVisibility(View.VISIBLE);
+            userInfoContainerView.setVisibility(View.VISIBLE);
             signInButton.setVisibility(View.GONE);
-            signOutButton.setVisibility(View.VISIBLE);
+            signOutItem.setVisible(true);
         } else {
             actionBar.setTitle(R.string.title_authentication);
             userLoginTextView.setText(null);
             userIdTextView.setText(null);
 
-            userLoginTextView.setVisibility(View.GONE);
-            userIdTextView.setVisibility(View.GONE);
+            userInfoContainerView.setVisibility(View.GONE);
             signInButton.setVisibility(View.VISIBLE);
-            signOutButton.setVisibility(View.GONE);
+            signOutItem.setVisible(false);
         }
     }
 

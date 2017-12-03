@@ -13,8 +13,12 @@
 
     <string name="action_search">Поиск</string>
     <string name="action_user">Аккаунт</string>
+    <string name="action_sign_out">Выйти</string>
 
     <string name="shop_address">Адрес</string>
     <string name="shop_name">Магазин</string>
     <string name="address">Адрес</string>
+
+    <string name="user_login_title">Логин:</string>
+    <string name="user_id_title">ID:</string>
 </resources>
