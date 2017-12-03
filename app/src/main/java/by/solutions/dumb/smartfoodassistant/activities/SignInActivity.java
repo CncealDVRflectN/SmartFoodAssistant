@@ -113,6 +113,8 @@ public class SignInActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        setResult(RESULT_OK);
         finish();
         return true;
     }
@@ -150,7 +152,8 @@ public class SignInActivity extends AppCompatActivity {
                 .setResultCallback(new ResultCallback<Status>() {
                     @Override
                     public void onResult(@NonNull Status status) {
-                        updateUI(null);
+                        setResult(RESULT_OK);
+                        finish();
                     }
                 });
     }
@@ -179,7 +182,8 @@ public class SignInActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "Firebase login: success");
                             FirebaseUser user = firebaseAuth.getCurrentUser();
-                            updateUI(user);
+                            setResult(RESULT_OK);
+                            finish();
                         } else {
                             Log.w(TAG, "Firebase login: fail", task.getException());
                             Toast.makeText(SignInActivity.this, "Authentication error",

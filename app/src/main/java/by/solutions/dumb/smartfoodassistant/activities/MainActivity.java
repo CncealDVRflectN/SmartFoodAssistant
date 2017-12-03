@@ -10,6 +10,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -24,12 +25,16 @@ public class MainActivity extends AppCompatActivity {
 
     //region Variables
 
+    private static final String TAG = "MainActivity";
+    private static final int RC_SIGN_IN = 1324;
+
     private FragmentManager fragmentManager;
     private ProductsFragment productsFragment;
     private RecipesFragment recipesFragment;
     private int currentPageId;
 
     private MenuItem searchItem;
+    MenuItem authItem;
     private ActionBar actionBar;
 
     //endregion
@@ -111,16 +116,31 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        MenuItem authItem = menu.findItem(R.id.action_user);
+        authItem = menu.findItem(R.id.action_user);
+        updateUser();
         authItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                startActivity(new Intent(MainActivity.this, SignInActivity.class));
+                startActivityForResult(new Intent(MainActivity.this, SignInActivity.class),
+                        RC_SIGN_IN);
                 return false;
             }
         });
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == RC_SIGN_IN) {
+            if (resultCode == RESULT_OK) {
+                updateUser();
+            } else {
+                Log.d(TAG, "SignInActivity incorrect result");
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     //endregion
@@ -145,6 +165,16 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.show(fragment1);
         fragmentTransaction.hide(fragment2);
         fragmentTransaction.commit();
+    }
+
+    private void updateUser() {
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        if (firebaseUser != null) {
+            authItem.setIcon(R.drawable.ic_user_sign_in_black_24dp);
+        } else {
+            authItem.setIcon(R.drawable.ic_user_sign_out_black_24dp);
+        }
     }
 
     //endregion
