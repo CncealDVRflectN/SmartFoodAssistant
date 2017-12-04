@@ -14,7 +14,7 @@ class FirebasePatchTask extends AsyncTask<String, Void, Void> {
     private final String LOG_TAG = "FirebasePATCH";
     private URL url;
 
-    public FirebasePatchTask(String url) {
+    FirebasePatchTask(String url) {
         try {
             this.url = new URL(url.trim());
         } catch (MalformedURLException e) {

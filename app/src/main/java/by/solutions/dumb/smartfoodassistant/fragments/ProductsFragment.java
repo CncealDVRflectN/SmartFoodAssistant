@@ -2,6 +2,7 @@ package by.solutions.dumb.smartfoodassistant.fragments;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -10,23 +11,22 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import by.solutions.dumb.smartfoodassistant.R;
+import by.solutions.dumb.smartfoodassistant.activities.MainActivity;
 import by.solutions.dumb.smartfoodassistant.activities.ProductActivity;
-import by.solutions.dumb.smartfoodassistant.adapters.ProductAdapter;
-import by.solutions.dumb.smartfoodassistant.containers.Container;
 import by.solutions.dumb.smartfoodassistant.containers.Product;
+import by.solutions.dumb.smartfoodassistant.util.filters.ProductsFilter;
+import by.solutions.dumb.smartfoodassistant.util.filters.RecipesFilter;
+import by.solutions.dumb.smartfoodassistant.util.sql.ProductsCursorAdapter;
+import by.solutions.dumb.smartfoodassistant.util.sql.ProductsDB;
+import by.solutions.dumb.smartfoodassistant.util.sql.ProductsDBHelper;
 
 
 public class ProductsFragment extends Fragment {
 
     //region Variables
 
-    private List<Container> products = new ArrayList<>();
-    private ListView productsList;
-    private ProductAdapter adapter;
+    private ListView productsView;
 
     //endregion
 
@@ -36,63 +36,54 @@ public class ProductsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        testInitial();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.products_fragment, container, false);
+        View fragmentView = inflater.inflate(R.layout.products_fragment, container, false);
 
-        productsList = view.findViewById(R.id.products_list);
+        productsView = fragmentView.findViewById(R.id.products_list);
+        productsView.setAdapter(new ProductsCursorAdapter(this.getActivity(),
+                MainActivity.getDbManager().getProductsDB().getAllDataSortedByName(), R.layout.product));
 
-        adapter = new ProductAdapter(getActivity().getApplicationContext(), R.layout.product, products);
-        productsList.setAdapter(adapter);
-
-        productsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        productsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getActivity(), ProductActivity.class);
-                Product product = (Product) adapterView.getItemAtPosition(i);
+                Cursor product = (Cursor) adapterView.getItemAtPosition(i);
 
-                intent.putExtra("productName", product.getName());
+                intent.putExtra("productID", product.getString(product.getColumnIndex(ProductsDBHelper.ID_COLUMN)));
 
                 startActivity(intent);
             }
         });
 
-        return view;
+        return fragmentView;
     }
 
     //endregion
 
+    public void resetFilter() {
+        productsView.setAdapter(new ProductsCursorAdapter(this.getActivity(),
+                MainActivity.getDbManager().getProductsDB().getAllDataSortedByName(), R.layout.product));
+    }
+
+    public void filter(ProductsFilter filter) {
+        productsView.setAdapter(new ProductsCursorAdapter(this.getActivity(),
+                MainActivity.getDbManager().getProductsDB().getFilteredData(filter), R.layout.product));
+    }
 
     //region Getters
-
-    public ProductAdapter getAdapter() {
-        return adapter;
-    }
 
     //endregion
 
 
     //region Setters
 
-    public void setAdapter(ProductAdapter adapter) {
-        this.adapter = adapter;
-    }
-
     //endregion
 
 
     //region Private methods
-
-    private void testInitial() {
-        for (int i = 0; i < 5; i++) {
-            products.add(new Product("Картоха", "USD", 2304));
-            products.add(new Product("Картофель", "USD", 2364));
-            products.add(new Product("Картошка", "USD", 3452));
-        }
-    }
 
     //endregion
 }

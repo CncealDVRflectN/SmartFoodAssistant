@@ -15,7 +15,7 @@ class FirebaseGetTask extends AsyncTask<Void, Void, String> {
     private final String LOG_TAG = "FirebaseGET";
     private URL url;
 
-    public FirebaseGetTask(String url) {
+    FirebaseGetTask(String url) {
         try {
             this.url = new URL(url.trim());
         } catch (MalformedURLException e) {
