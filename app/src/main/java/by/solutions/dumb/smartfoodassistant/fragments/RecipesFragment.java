@@ -12,9 +12,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import by.solutions.dumb.smartfoodassistant.R;
-import by.solutions.dumb.smartfoodassistant.activities.MainActivity;
 import by.solutions.dumb.smartfoodassistant.activities.RecipeActivity;
 import by.solutions.dumb.smartfoodassistant.util.filters.RecipesFilter;
+import by.solutions.dumb.smartfoodassistant.util.sql.DatabasesManager;
 import by.solutions.dumb.smartfoodassistant.util.sql.RecipesCursorAdapter;
 import by.solutions.dumb.smartfoodassistant.util.sql.RecipesDBHelper;
 
@@ -41,7 +41,7 @@ public class RecipesFragment extends Fragment {
 
         recipesView = fragmentView.findViewById(R.id.recipes_list);
         recipesView.setAdapter(new RecipesCursorAdapter(this.getActivity(),
-                MainActivity.getDbManager().getRecipesDB().getAllDataSortedByName(), R.layout.recipe));
+                DatabasesManager.getRecipesDB().getAllDataSortedByName(), R.layout.recipe));
 
         recipesView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -62,12 +62,12 @@ public class RecipesFragment extends Fragment {
 
     public void resetFilter() {
         recipesView.setAdapter(new RecipesCursorAdapter(this.getActivity(),
-                MainActivity.getDbManager().getRecipesDB().getAllDataSortedByName(), R.layout.recipe));
+                DatabasesManager.getRecipesDB().getAllDataSortedByName(), R.layout.recipe));
     }
 
     public void filter(RecipesFilter filter) {
         recipesView.setAdapter(new RecipesCursorAdapter(this.getActivity(),
-                MainActivity.getDbManager().getRecipesDB().getFilteredData(filter), R.layout.recipe));
+                DatabasesManager.getRecipesDB().getFilteredData(filter), R.layout.recipe));
     }
 
     //region Getters

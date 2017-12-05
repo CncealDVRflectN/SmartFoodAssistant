@@ -46,8 +46,6 @@ public class MainActivity extends AppCompatActivity {
     private ProductsFilter productsFilter;
     private RecipesFilter recipesFilter;
 
-    private static DatabasesManager dbManager;
-
     //endregion
 
 
@@ -60,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigationView = findViewById(R.id.bottomNavigationBar);
 
-        dbManager = new DatabasesManager(this, "ru");
+        DatabasesManager.changeLanguageWithVersion(this, "ru", 1);
         fragmentManager = getFragmentManager();
         productsFragment = new ProductsFragment();
         recipesFragment = new RecipesFragment();
@@ -76,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
         hideFragment(favoritesFragment);
         actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.title_recipes);
-
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -119,7 +116,6 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-
     }
 
     @Override
@@ -228,7 +224,4 @@ public class MainActivity extends AppCompatActivity {
 
     //endregion
 
-    public static DatabasesManager getDbManager() {
-        return dbManager;
-    }
 }

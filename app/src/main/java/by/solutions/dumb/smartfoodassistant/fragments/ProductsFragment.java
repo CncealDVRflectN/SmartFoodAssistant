@@ -12,9 +12,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import by.solutions.dumb.smartfoodassistant.R;
-import by.solutions.dumb.smartfoodassistant.activities.MainActivity;
 import by.solutions.dumb.smartfoodassistant.activities.ProductActivity;
 import by.solutions.dumb.smartfoodassistant.util.filters.ProductsFilter;
+import by.solutions.dumb.smartfoodassistant.util.sql.DatabasesManager;
 import by.solutions.dumb.smartfoodassistant.util.sql.ProductsCursorAdapter;
 import by.solutions.dumb.smartfoodassistant.util.sql.ProductsDBHelper;
 
@@ -41,7 +41,7 @@ public class ProductsFragment extends Fragment {
 
         productsView = fragmentView.findViewById(R.id.products_list);
         productsView.setAdapter(new ProductsCursorAdapter(this.getActivity(),
-                MainActivity.getDbManager().getProductsDB().getAllDataSortedByName(), R.layout.product));
+                DatabasesManager.getProductsDB().getAllDataSortedByName(), R.layout.product));
 
         productsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -62,12 +62,12 @@ public class ProductsFragment extends Fragment {
 
     public void resetFilter() {
         productsView.setAdapter(new ProductsCursorAdapter(this.getActivity(),
-                MainActivity.getDbManager().getProductsDB().getAllDataSortedByName(), R.layout.product));
+                DatabasesManager.getProductsDB().getAllDataSortedByName(), R.layout.product));
     }
 
     public void filter(ProductsFilter filter) {
         productsView.setAdapter(new ProductsCursorAdapter(this.getActivity(),
-                MainActivity.getDbManager().getProductsDB().getFilteredData(filter), R.layout.product));
+                DatabasesManager.getProductsDB().getFilteredData(filter), R.layout.product));
     }
 
     //region Getters

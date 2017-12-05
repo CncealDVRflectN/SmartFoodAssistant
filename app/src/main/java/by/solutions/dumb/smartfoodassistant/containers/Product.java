@@ -29,12 +29,12 @@ public class Product implements Container {
         return name;
     }
 
-    public double getPrice() {
-        return price;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getCurrency() {
-        return currency;
+    public double getPrice() {
+        return price;
     }
 
     //endregion
@@ -42,12 +42,12 @@ public class Product implements Container {
 
     //region Setters
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getCurrency() {
+        return currency;
     }
 
     public void setCurrency(String currency) {

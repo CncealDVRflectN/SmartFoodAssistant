@@ -20,6 +20,7 @@ public class ProductsDBHelper extends DatabaseOpenHelper {
 
     public ProductsDBHelper(Context context, String language, int version) {
         super(context, "PRODUCTS", language, version);
+        getWritableDatabase();
     }
 
     @Override

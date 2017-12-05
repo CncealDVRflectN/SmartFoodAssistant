@@ -5,8 +5,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 public abstract class Database<T extends DatabaseOpenHelper> {
-    protected SQLiteDatabase db;
     public final T HELPER;
+    protected SQLiteDatabase db;
 
     public Database(T helper) {
         HELPER = helper;
@@ -36,7 +36,7 @@ public abstract class Database<T extends DatabaseOpenHelper> {
 
         request.append("SELECT * ");
         request.append("FROM ").append(HELPER.TABLE_NAME).append(" ");
-        request.append("WHERE ").append(HELPER.ID_COLUMN).append(" = '").append(ID).append("'");
+        request.append("WHERE ").append(DatabaseOpenHelper.ID_COLUMN).append(" = '").append(ID).append("'");
 
         result = HELPER.getReadableDatabase().rawQuery(request.toString(), null);
         result.moveToFirst();
