@@ -35,10 +35,10 @@ public class ProductsDBHelper extends DatabaseOpenHelper {
         Log.d(TABLE_NAME, "Create");
 
         requestBuilder.append("CREATE TABLE ").append(TABLE_NAME).append(" (");
-        requestBuilder.append(SQL_ID).append(" integer primary key autoincrement, ");
-        requestBuilder.append(ID_COLUMN).append(" text, ");
-        requestBuilder.append(NAME_COLUMN).append(" text, ");
-        requestBuilder.append(MEASURE_COLUMN).append(" text);");
+        requestBuilder.append(SQL_ID).append(" INTEGER PRIMARY KEY AUTOINCREMENT, ");
+        requestBuilder.append(ID_COLUMN).append(" TEXT, ");
+        requestBuilder.append(NAME_COLUMN).append(" TEXT, ");
+        requestBuilder.append(MEASURE_COLUMN).append(" TEXT);");
 
         db.execSQL(requestBuilder.toString());
 

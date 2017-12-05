@@ -35,9 +35,9 @@ public class IngredientsDBHelper extends DatabaseOpenHelper {
         Log.e(TABLE_NAME, "Create");
 
         requestBuilder.append("CREATE TABLE ").append(TABLE_NAME).append(" (");
-        requestBuilder.append(SQL_ID).append(" integer primary key autoincrement, ");
-        requestBuilder.append(ID_COLUMN).append(" text, ");
-        requestBuilder.append(AMOUNT_COLUMN).append(" text);");
+        requestBuilder.append(SQL_ID).append(" INTEGER PRIMARY KEY AUTOINCREMENT, ");
+        requestBuilder.append(ID_COLUMN).append(" TEXT, ");
+        requestBuilder.append(AMOUNT_COLUMN).append(" TEXT);");
 
         db.execSQL(requestBuilder.toString());
 
