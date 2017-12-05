@@ -3,8 +3,13 @@
 
     <string name="title_recipes">Рецепты</string>
     <string name="title_products">Продукты</string>
+    <string name="title_favorites">Избранное</string>
     <string name="title_authentication">Авторизация</string>
     <string name="title_account">Аккаунт</string>
+    <string name="title_add_recipe">Добавить рецепт</string>
+    <string name="title_add_product">Добавить продукт</string>
+    <string name="title_recipe_ingredients">Ингредиенты</string>
+    <string name="title_recipe_description">Приготовление</string>
 
     <string name="product_name">Название продукта</string>
     <string name="product_price">Цена</string>
@@ -14,6 +19,7 @@
     <string name="action_search">Поиск</string>
     <string name="action_user">Аккаунт</string>
     <string name="action_sign_out">Выйти</string>
+    <string name="action_confirm_addition">Готово</string>
 
     <string name="shop_address">Адрес</string>
 
@@ -26,4 +32,8 @@
     <string name="sign_out_dialog_message">Вы действительно хотите выйти из аккаунта?</string>
     <string name="sign_out_dialog_positive">Да</string>
     <string name="sign_out_dialog_negative">Нет</string>
+
+    <string name="add_product_name_hint">Введите название</string>
+    <string name="add_product_measure_hint">Введите размерность</string>
+
 </resources>

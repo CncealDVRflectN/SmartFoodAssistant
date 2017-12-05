@@ -32,7 +32,7 @@ public class ShopActivity extends AppCompatActivity {
         ProductAdapter productAdapter;
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.shop_activity);
+        setContentView(R.layout.activity_shop);
 
         testInitial();
         productAdapter = new ProductAdapter(this, R.layout.product, products);

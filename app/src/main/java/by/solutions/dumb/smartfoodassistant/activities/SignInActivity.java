@@ -120,7 +120,11 @@ public class SignInActivity extends AppCompatActivity {
             if (result.isSuccess()) {
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
+                Log.d(TAG, "Google login: success");
             } else {
+                Log.w(TAG, "Google login: fail");
+                Toast.makeText(SignInActivity.this, "Google authentication error",
+                        Toast.LENGTH_SHORT).show();
                 updateUI(null);
             }
         }
@@ -142,7 +146,7 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 signOutDialog.show(fragmentManager, TAG_DIALOG_SIGN_OUT);
-                return false;
+                return true;
             }
         });
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
@@ -185,7 +189,6 @@ public class SignInActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "Firebase login: success");
-                            FirebaseUser user = firebaseAuth.getCurrentUser();
                             setResult(RESULT_OK);
                             finish();
                         } else {

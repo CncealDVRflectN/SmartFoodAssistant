@@ -37,7 +37,7 @@ public class ProductsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View fragmentView = inflater.inflate(R.layout.products_fragment, container, false);
+        View fragmentView = inflater.inflate(R.layout.fragment_products, container, false);
 
         productsView = fragmentView.findViewById(R.id.products_list);
         productsView.setAdapter(new ProductsCursorAdapter(this.getActivity(),
