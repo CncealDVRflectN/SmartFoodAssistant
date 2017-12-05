@@ -43,20 +43,17 @@ public class SignInActivity extends AppCompatActivity {
     private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN_GOOGLE = 8841;
     private static final String TAG_DIALOG_SIGN_OUT = "LogOutDialog";
-
+    AuthSignOutDialogFragment signOutDialog;
     private FirebaseAuth firebaseAuth;
     private GoogleApiClient googleApiClient;
-
     private TextView userLoginTextView;
     private TextView userIdTextView;
     private View userInfoContainerView;
     private Button signInButton;
     private ActionBar actionBar;
     private MenuItem signOutItem;
-
     private ProgressDialog progressDialog;
     private FragmentManager fragmentManager;
-    AuthSignOutDialogFragment signOutDialog;
 
 
     //endregion

@@ -15,7 +15,8 @@ import java.util.List;
 import by.solutions.dumb.smartfoodassistant.R;
 import by.solutions.dumb.smartfoodassistant.adapters.ShopAdapter;
 import by.solutions.dumb.smartfoodassistant.containers.Shop;
-import by.solutions.dumb.smartfoodassistant.util.sql.ProductsDB;
+import by.solutions.dumb.smartfoodassistant.util.sql.DatabasesManager;
+import by.solutions.dumb.smartfoodassistant.util.sql.ProductsDBHelper;
 
 
 public class ProductActivity extends AppCompatActivity {
@@ -36,19 +37,18 @@ public class ProductActivity extends AppCompatActivity {
         ShopAdapter shopAdapter;
         String productID;
         Cursor product;
-        ProductsDB db = MainActivity.getDbManager().getProductsDB();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.product_activity);
         productID = getIntent().getStringExtra("productID");
-        product = db.getByID(productID);
+        product = DatabasesManager.getProductsDB().getByID(productID);
 
         testInitial();
         shopsView = findViewById(R.id.shops_list);
         shopAdapter = new ShopAdapter(this, R.layout.shop, shops);
         shopsView.setAdapter(shopAdapter);
         actionBar = getSupportActionBar();
-        actionBar.setTitle(product.getString(product.getColumnIndex(db.HELPER.NAME_COLUMN)));
+        actionBar.setTitle(product.getString(product.getColumnIndex(ProductsDBHelper.NAME_COLUMN)));
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         shopsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

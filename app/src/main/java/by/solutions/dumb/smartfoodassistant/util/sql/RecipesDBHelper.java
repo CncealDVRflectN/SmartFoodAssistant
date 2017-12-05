@@ -4,6 +4,7 @@ package by.solutions.dumb.smartfoodassistant.util.sql;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import org.json.simple.JSONObject;
@@ -15,17 +16,17 @@ import java.util.Set;
 import by.solutions.dumb.smartfoodassistant.util.firebase.rest.api.FirebaseREST;
 
 public class RecipesDBHelper extends DatabaseOpenHelper {
-    private Context context;
-
     public static final String NAME_COLUMN = "NAME";
     public static final String TYPE_COLUMN = "TYPE";
     public static final String INSTRUCTION_COLUMN = "INSTRUCTION";
     public static final String CUISINE_COLUMN = "CUISINE";
     public static final String INGREDIENTS_COLUMN = "INGREDIENTS";
+    private Context context;
 
     public RecipesDBHelper(Context context, String language, int version) {
         super(context, "RECIPES", language, version);
         this.context = context;
+        getWritableDatabase();
     }
 
     @Override
@@ -36,6 +37,7 @@ public class RecipesDBHelper extends DatabaseOpenHelper {
         JSONObject recipes;
         JSONObject recipe;
         ContentValues contentValues = new ContentValues();
+        SQLiteOpenHelper ingredientsHelper;
         Set recipesID;
         Log.d(TABLE_NAME, "Create");
 
@@ -64,7 +66,8 @@ public class RecipesDBHelper extends DatabaseOpenHelper {
                 contentValues.put(INGREDIENTS_COLUMN, "INGREDIENTS_" + recipeID + "_" + LANGUAGE);
                 db.insert(TABLE_NAME, null, contentValues);
 
-                new IngredientsDBHelper(context, (String) recipeID, LANGUAGE, 1);
+                ingredientsHelper = new IngredientsDBHelper(context, (String) recipeID, LANGUAGE, 1);
+                ingredientsHelper.close();
             }
         } catch (ParseException e) {
             Log.e(TABLE_NAME, e.getMessage());
