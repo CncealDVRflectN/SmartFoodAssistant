@@ -39,7 +39,7 @@ public class ProductActivity extends AppCompatActivity {
         ProductsDB db = MainActivity.getDbManager().getProductsDB();
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.product_activity);
+        setContentView(R.layout.activity_product);
         productID = getIntent().getStringExtra("productID");
         product = db.getByID(productID);
 

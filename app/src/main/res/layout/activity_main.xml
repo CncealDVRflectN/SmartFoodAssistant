@@ -24,19 +24,4 @@
         app:layout_constraintRight_toRightOf="parent"
         app:menu="@menu/navigation_menu" />
 
-    <!--<android.support.design.widget.FloatingActionButton-->
-        <!--android:id="@+id/addFAB"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:src="@drawable/ic_add_white_24dp"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintBottom_toTopOf="@id/bottomNavigationBar"-->
-        <!--android:layout_marginBottom="10dp"-->
-        <!--android:layout_marginEnd="10dp"-->
-        <!--app:elevation="6dp"-->
-        <!--app:backgroundTint="@color/colorAccent"-->
-        <!--app:pressedTranslationZ="12dp"-->
-        <!--android:clickable="true"-->
-        <!--android:focusable="true"/>-->
-
 </LinearLayout>

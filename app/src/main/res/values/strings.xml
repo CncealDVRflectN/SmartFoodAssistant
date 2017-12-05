@@ -3,6 +3,7 @@
 
     <string name="title_recipes">Рецепты</string>
     <string name="title_products">Продукты</string>
+    <string name="title_favorites">Избранное</string>
     <string name="title_authentication">Авторизация</string>
     <string name="title_account">Аккаунт</string>
     <string name="title_add_recipe">Добавить рецепт</string>

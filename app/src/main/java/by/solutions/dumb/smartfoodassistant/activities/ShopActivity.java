@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +32,7 @@ public class ShopActivity extends AppCompatActivity {
         ProductAdapter productAdapter;
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.shop_activity);
+        setContentView(R.layout.activity_shop);
 
         testInitial();
         productAdapter = new ProductAdapter(this, R.layout.product, products);

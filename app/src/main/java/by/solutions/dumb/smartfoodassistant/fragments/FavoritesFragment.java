@@ -19,11 +19,11 @@ import by.solutions.dumb.smartfoodassistant.util.sql.RecipesCursorAdapter;
 import by.solutions.dumb.smartfoodassistant.util.sql.RecipesDBHelper;
 
 
-public class RecipesFragment extends Fragment {
+public class FavoritesFragment extends Fragment {
 
     //region Variables
 
-    private ListView recipesView;
+    private ListView favoritesView;
 
     //endregion
 
@@ -37,13 +37,13 @@ public class RecipesFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View fragmentView = inflater.inflate(R.layout.fragment_recipes, container, false);
+        View fragmentView = inflater.inflate(R.layout.fragment_favorites, container, false);
 
-        recipesView = fragmentView.findViewById(R.id.recipes_list);
-        recipesView.setAdapter(new RecipesCursorAdapter(this.getActivity(),
+        favoritesView = fragmentView.findViewById(R.id.favorites_list);
+        favoritesView.setAdapter(new RecipesCursorAdapter(this.getActivity(),
                 MainActivity.getDbManager().getRecipesDB().getAllDataSortedByName(), R.layout.recipe));
 
-        recipesView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        favoritesView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getActivity(), RecipeActivity.class);
@@ -61,12 +61,12 @@ public class RecipesFragment extends Fragment {
     //endregion
 
     public void resetFilter() {
-        recipesView.setAdapter(new RecipesCursorAdapter(this.getActivity(),
+        favoritesView.setAdapter(new RecipesCursorAdapter(this.getActivity(),
                 MainActivity.getDbManager().getRecipesDB().getAllDataSortedByName(), R.layout.recipe));
     }
 
     public void filter(RecipesFilter filter) {
-        recipesView.setAdapter(new RecipesCursorAdapter(this.getActivity(),
+        favoritesView.setAdapter(new RecipesCursorAdapter(this.getActivity(),
                 MainActivity.getDbManager().getRecipesDB().getFilteredData(filter), R.layout.recipe));
     }
 
