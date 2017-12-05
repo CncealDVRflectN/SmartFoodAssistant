@@ -20,6 +20,9 @@ import com.google.firebase.auth.FirebaseUser;
 import by.solutions.dumb.smartfoodassistant.R;
 import by.solutions.dumb.smartfoodassistant.fragments.ProductsFragment;
 import by.solutions.dumb.smartfoodassistant.fragments.RecipesFragment;
+import by.solutions.dumb.smartfoodassistant.util.filters.ProductsFilter;
+import by.solutions.dumb.smartfoodassistant.util.filters.RecipesFilter;
+import by.solutions.dumb.smartfoodassistant.util.sql.DatabasesManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,6 +40,11 @@ public class MainActivity extends AppCompatActivity {
     MenuItem authItem;
     private ActionBar actionBar;
 
+    private ProductsFilter productsFilter;
+    private RecipesFilter recipesFilter;
+
+    private static DatabasesManager dbManager;
+
     //endregion
 
 
@@ -51,9 +59,12 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigationView = findViewById(R.id.bottomNavigationBar);
 
+        dbManager = new DatabasesManager(this, "ru");
         fragmentManager = getFragmentManager();
         productsFragment = new ProductsFragment();
         recipesFragment = new RecipesFragment();
+        productsFilter = new ProductsFilter();
+        recipesFilter = new RecipesFilter();
 
         currentPageId = R.id.navigation_recipes;
         addFragment(R.id.main_fragment_container, recipesFragment);
@@ -70,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                         if (currentPageId != R.id.navigation_recipes) {
                             currentPageId = R.id.navigation_recipes;
                             changeFragments(recipesFragment, productsFragment);
-                            productsFragment.getAdapter().getFilter().filter("");
+                            productsFragment.resetFilter();
                             searchItem.collapseActionView();
                             actionBar.setTitle(R.string.title_recipes);
                         }
@@ -79,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                         if (currentPageId != R.id.navigation_products) {
                             currentPageId = R.id.navigation_products;
                             changeFragments(productsFragment, recipesFragment);
-                            recipesFragment.getAdapter().getFilter().filter("");
+                            recipesFragment.resetFilter();
                             searchItem.collapseActionView();
                             actionBar.setTitle(R.string.title_products);
                         }
@@ -108,9 +119,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 if (currentPageId == R.id.navigation_recipes) {
-                    recipesFragment.getAdapter().getFilter().filter(newText);
+                    recipesFilter.name = newText;
+                    recipesFragment.filter(recipesFilter);
                 } else if (currentPageId == R.id.navigation_products) {
-                    productsFragment.getAdapter().getFilter().filter(newText);
+                    productsFilter.name = newText;
+                    productsFragment.filter(productsFilter);
                 }
                 return false;
             }
@@ -178,4 +191,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //endregion
+
+
+    public static DatabasesManager getDbManager() {
+        return dbManager;
+    }
 }

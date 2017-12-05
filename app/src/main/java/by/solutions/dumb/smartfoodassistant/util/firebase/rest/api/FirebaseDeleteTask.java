@@ -13,7 +13,7 @@ class FirebaseDeleteTask extends AsyncTask<Void, Void, Void> {
     private final String LOG_TAG = "FirebaseDELETE";
     private URL url;
 
-    public FirebaseDeleteTask(String url) {
+    FirebaseDeleteTask(String url) {
         try {
             this.url = new URL(url.trim());
         } catch (MalformedURLException e) {

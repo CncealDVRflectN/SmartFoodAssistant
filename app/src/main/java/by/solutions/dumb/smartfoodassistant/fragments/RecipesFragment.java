@@ -1,8 +1,11 @@
 package by.solutions.dumb.smartfoodassistant.fragments;
 
 import android.app.Fragment;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,18 +15,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import by.solutions.dumb.smartfoodassistant.R;
+import by.solutions.dumb.smartfoodassistant.activities.MainActivity;
 import by.solutions.dumb.smartfoodassistant.adapters.RecipeAdapter;
 import by.solutions.dumb.smartfoodassistant.containers.Container;
 import by.solutions.dumb.smartfoodassistant.containers.Recipe;
+import by.solutions.dumb.smartfoodassistant.util.filters.RecipesFilter;
+import by.solutions.dumb.smartfoodassistant.util.sql.ProductsDBHelper;
+import by.solutions.dumb.smartfoodassistant.util.sql.RecipesCursorAdapter;
+import by.solutions.dumb.smartfoodassistant.util.sql.RecipesDB;
+import by.solutions.dumb.smartfoodassistant.util.sql.RecipesDBHelper;
 
 
 public class RecipesFragment extends Fragment {
 
     //region Variables
 
-    private List<Container> recipes = new ArrayList<>();
-    private ListView recipesList;
-    private RecipeAdapter adapter;
+    private ListView recipesView;
 
     //endregion
 
@@ -33,50 +40,48 @@ public class RecipesFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        testInitial();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.recipes_fragment, container, false);
+        View fragmentView = inflater.inflate(R.layout.recipes_fragment, container, false);
 
-        recipesList = view.findViewById(R.id.recipes_list);
-        adapter = new RecipeAdapter(getActivity().getApplicationContext(), R.layout.recipe, recipes);
-        recipesList.setAdapter(adapter);
+        recipesView = fragmentView.findViewById(R.id.recipes_list);
+        recipesView.setAdapter(new RecipesCursorAdapter(this.getActivity(),
+                MainActivity.getDbManager().getRecipesDB().getAllDataSortedByName(), R.layout.recipe));
 
-        return view;
+        return fragmentView;
     }
 
     //endregion
 
+    public void resetFilter() {
+        recipesView.setAdapter(new RecipesCursorAdapter(this.getActivity(),
+                MainActivity.getDbManager().getRecipesDB().getAllDataSortedByName(), R.layout.recipe));
+    }
+
+    public void filter(RecipesFilter filter) {
+        recipesView.setAdapter(new RecipesCursorAdapter(this.getActivity(),
+                MainActivity.getDbManager().getRecipesDB().getFilteredData(filter), R.layout.recipe));
+    }
 
     //region Getters
 
-    public RecipeAdapter getAdapter() {
-        return adapter;
-    }
+
 
     //endregion
 
 
     //region Setters
 
-    public void setAdapter(RecipeAdapter adapter) {
-        this.adapter = adapter;
-    }
+
 
     //endregion
 
 
     //region Private methods
 
-    private void testInitial() {
-        for (int i = 0; i < 5; i++) {
-            recipes.add(new Recipe("Жареная картоха"));
-            recipes.add(new Recipe("Вареный картофель"));
-            recipes.add(new Recipe("Тушеная картошка"));
-        }
-    }
+
 
     //endregion
 }

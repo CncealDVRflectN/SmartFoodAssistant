@@ -14,7 +14,7 @@ class FirebasePutTask extends AsyncTask<String, Void, Void> {
     private final String LOG_TAG = "FirebasePUT";
     private URL url;
 
-    public FirebasePutTask(String url) {
+    FirebasePutTask(String url) {
         try {
             this.url = new URL(url.trim());
         } catch (MalformedURLException e) {

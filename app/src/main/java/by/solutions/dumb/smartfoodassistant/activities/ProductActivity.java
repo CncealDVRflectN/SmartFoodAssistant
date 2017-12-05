@@ -1,6 +1,7 @@
 package by.solutions.dumb.smartfoodassistant.activities;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import java.util.List;
 import by.solutions.dumb.smartfoodassistant.R;
 import by.solutions.dumb.smartfoodassistant.adapters.ShopAdapter;
 import by.solutions.dumb.smartfoodassistant.containers.Shop;
+import by.solutions.dumb.smartfoodassistant.util.sql.ProductsDB;
 
 
 public class ProductActivity extends AppCompatActivity {
@@ -32,16 +34,21 @@ public class ProductActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ShopAdapter shopAdapter;
+        String productID;
+        Cursor product;
+        ProductsDB db = MainActivity.getDbManager().getProductsDB();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.product_activity);
+        productID = getIntent().getStringExtra("productID");
+        product = db.getByID(productID);
 
         testInitial();
         shopsView = findViewById(R.id.shops_list);
         shopAdapter = new ShopAdapter(this, R.layout.shop, shops);
         shopsView.setAdapter(shopAdapter);
         actionBar = getSupportActionBar();
-        actionBar.setTitle(getIntent().getStringExtra("productName"));
+        actionBar.setTitle(product.getString(product.getColumnIndex(db.HELPER.NAME_COLUMN)));
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         shopsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
