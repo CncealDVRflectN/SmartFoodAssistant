@@ -1,29 +1,20 @@
 package by.solutions.dumb.smartfoodassistant.fragments;
 
 import android.app.Fragment;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import by.solutions.dumb.smartfoodassistant.R;
 import by.solutions.dumb.smartfoodassistant.activities.MainActivity;
-import by.solutions.dumb.smartfoodassistant.adapters.RecipeAdapter;
-import by.solutions.dumb.smartfoodassistant.containers.Container;
-import by.solutions.dumb.smartfoodassistant.containers.Recipe;
+import by.solutions.dumb.smartfoodassistant.activities.RecipeActivity;
 import by.solutions.dumb.smartfoodassistant.util.filters.RecipesFilter;
-import by.solutions.dumb.smartfoodassistant.util.sql.ProductsDBHelper;
 import by.solutions.dumb.smartfoodassistant.util.sql.RecipesCursorAdapter;
-import by.solutions.dumb.smartfoodassistant.util.sql.RecipesDB;
-import by.solutions.dumb.smartfoodassistant.util.sql.RecipesDBHelper;
 
 
 public class RecipesFragment extends Fragment {
@@ -50,6 +41,14 @@ public class RecipesFragment extends Fragment {
         recipesView.setAdapter(new RecipesCursorAdapter(this.getActivity(),
                 MainActivity.getDbManager().getRecipesDB().getAllDataSortedByName(), R.layout.recipe));
 
+        recipesView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getActivity(), RecipeActivity.class);
+                startActivity(intent);
+            }
+        });
+
         return fragmentView;
     }
 
@@ -68,19 +67,16 @@ public class RecipesFragment extends Fragment {
     //region Getters
 
 
-
     //endregion
 
 
     //region Setters
 
 
-
     //endregion
 
 
     //region Private methods
-
 
 
     //endregion

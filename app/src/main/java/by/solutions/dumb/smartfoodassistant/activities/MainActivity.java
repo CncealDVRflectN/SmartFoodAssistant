@@ -37,8 +37,10 @@ public class MainActivity extends AppCompatActivity {
     private int currentPageId;
 
     private MenuItem searchItem;
-    MenuItem authItem;
+    private MenuItem authItem;
     private ActionBar actionBar;
+    private BottomNavigationView bottomNavigationView;
+//    private FloatingActionButton addFab;
 
     private ProductsFilter productsFilter;
     private RecipesFilter recipesFilter;
@@ -52,12 +54,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        BottomNavigationView bottomNavigationView;
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         bottomNavigationView = findViewById(R.id.bottomNavigationBar);
+//        addFab = findViewById(R.id.addFAB);
 
         dbManager = new DatabasesManager(this, "ru");
         fragmentManager = getFragmentManager();
@@ -73,14 +74,17 @@ public class MainActivity extends AppCompatActivity {
         actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.title_recipes);
 
+
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.navigation_recipes:
                         if (currentPageId != R.id.navigation_recipes) {
+                            Log.d(TAG, "Recipes bottom button clicked");
                             currentPageId = R.id.navigation_recipes;
                             changeFragments(recipesFragment, productsFragment);
+                            Log.d(TAG, "Recipes fragment showed");
                             productsFragment.resetFilter();
                             searchItem.collapseActionView();
                             actionBar.setTitle(R.string.title_recipes);
@@ -88,8 +92,10 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     case R.id.navigation_products:
                         if (currentPageId != R.id.navigation_products) {
+                            Log.d(TAG, "Products bottom button clicked");
                             currentPageId = R.id.navigation_products;
                             changeFragments(productsFragment, recipesFragment);
+                            Log.d(TAG, "Products fragment showed");
                             recipesFragment.resetFilter();
                             searchItem.collapseActionView();
                             actionBar.setTitle(R.string.title_products);
@@ -99,7 +105,29 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+//        addFab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                switch (currentPageId) {
+//                    case R.id.navigation_recipes:
+//                        startActivity(addRecipeIntent);
+//                        return;
+//                    case R.id.navigation_products:
+//                        startActivity(addProductIntent);
+//                }
+//            }
+//        });
     }
+
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        System.out.println("+++++++++++++++++++++++++++++++++++++");
+//        System.out.println("*******************************" + (bottomNavigationView.getTop() - bottomNavigationView.getBottom()));
+//        bottomNavigationView.measure(0,0);
+//        findViewById(R.id.main_fragment_container).setPadding(0,0, 0, bottomNavigationView.getTop() - bottomNavigationView.getBottom());
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -136,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 startActivityForResult(new Intent(MainActivity.this, SignInActivity.class),
                         RC_SIGN_IN);
-                return false;
+                return true;
             }
         });
 
@@ -184,9 +212,11 @@ public class MainActivity extends AppCompatActivity {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         if (firebaseUser != null) {
-            authItem.setIcon(R.drawable.ic_user_sign_in_black_24dp);
+            authItem.setIcon(R.drawable.ic_user_sign_in_white_24dp);
+//            addFab.setVisibility(View.VISIBLE);
         } else {
-            authItem.setIcon(R.drawable.ic_user_sign_out_black_24dp);
+            authItem.setIcon(R.drawable.ic_user_sign_out_white_24dp);
+//            addFab.setVisibility(View.GONE);
         }
     }
 

@@ -10,7 +10,7 @@
 
     <item android:id="@+id/action_user"
         android:title="@string/action_user"
-        android:icon="@drawable/ic_user_sign_out_black_24dp"
+        android:icon="@drawable/ic_user_sign_out_white_24dp"
         app:showAsAction="ifRoom" />
 
 </menu>
