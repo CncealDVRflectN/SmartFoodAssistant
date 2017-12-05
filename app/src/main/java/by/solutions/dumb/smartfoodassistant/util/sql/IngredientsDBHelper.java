@@ -4,7 +4,6 @@ package by.solutions.dumb.smartfoodassistant.util.sql;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import org.json.simple.JSONObject;
@@ -21,7 +20,8 @@ public class IngredientsDBHelper extends DatabaseOpenHelper {
 
     public IngredientsDBHelper(Context context, String recipeID, String language, int version) {
         super(context, "INGREDIENTS_" + recipeID, language, version);
-        RECIPE_ID = recipeID.trim();
+        RECIPE_ID = recipeID;
+        getWritableDatabase();
     }
 
     @Override
@@ -32,12 +32,12 @@ public class IngredientsDBHelper extends DatabaseOpenHelper {
         JSONObject ingredients;
         ContentValues contentValues = new ContentValues();
         Set ingredientsID;
-        Log.e(TABLE_NAME, "Create");
+        Log.d(TABLE_NAME, "Create");
 
-        requestBuilder.append("CREATE TABLE ").append(TABLE_NAME).append(" (");
+        requestBuilder.append("CREATE TABLE [").append(TABLE_NAME).append("] (");
         requestBuilder.append(SQL_ID).append(" INTEGER PRIMARY KEY AUTOINCREMENT, ");
         requestBuilder.append(ID_COLUMN).append(" TEXT, ");
-        requestBuilder.append(AMOUNT_COLUMN).append(" TEXT);");
+        requestBuilder.append(AMOUNT_COLUMN).append(" REAL);");
 
         db.execSQL(requestBuilder.toString());
 
@@ -48,7 +48,7 @@ public class IngredientsDBHelper extends DatabaseOpenHelper {
                 contentValues.clear();
                 ingredientID = ((String) ingredientID).replaceAll("\"", "");
                 contentValues.put(ID_COLUMN, (String) ingredientID);
-                contentValues.put(AMOUNT_COLUMN, ((String) ingredients.get(ingredientID)).replaceAll("\"", ""));
+                contentValues.put(AMOUNT_COLUMN, (Double) ingredients.get(ingredientID));
             }
         } catch (ParseException e) {
             Log.e(TABLE_NAME, e.getMessage());

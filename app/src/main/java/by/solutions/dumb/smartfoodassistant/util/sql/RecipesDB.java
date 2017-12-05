@@ -19,7 +19,7 @@ public class RecipesDB extends Database<RecipesDBHelper> {
 
         request.append("SELECT * ");
         request.append("FROM ").append(HELPER.TABLE_NAME).append(" ");
-        request.append("ORDER BY ").append(HELPER.NAME_COLUMN).append(" ASC");
+        request.append("ORDER BY ").append(RecipesDBHelper.NAME_COLUMN).append(" ASC");
 
         result = HELPER.getReadableDatabase().rawQuery(request.toString(), null);
         result.moveToFirst();
@@ -32,9 +32,9 @@ public class RecipesDB extends Database<RecipesDBHelper> {
 
         request.append("SELECT * ");
         request.append("FROM ").append(HELPER.TABLE_NAME).append(" ");
-        request.append("WHERE ").append(HELPER.NAME_COLUMN).append(" ");
+        request.append("WHERE ").append(RecipesDBHelper.NAME_COLUMN).append(" ");
         request.append("LIKE '%").append(filter.name).append("%' ");
-        request.append("ORDER BY ").append(HELPER.NAME_COLUMN).append(" ASC");
+        request.append("ORDER BY ").append(RecipesDBHelper.NAME_COLUMN).append(" ASC");
 
         result = HELPER.getReadableDatabase().rawQuery(request.toString(), null);
         result.moveToFirst();

@@ -30,20 +30,16 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private static final int RC_SIGN_IN = 1324;
-
+    MenuItem authItem;
     private FragmentManager fragmentManager;
     private ProductsFragment productsFragment;
     private RecipesFragment recipesFragment;
     private int currentPageId;
-
     private MenuItem searchItem;
-    MenuItem authItem;
     private ActionBar actionBar;
 
     private ProductsFilter productsFilter;
     private RecipesFilter recipesFilter;
-
-    private static DatabasesManager dbManager;
 
     //endregion
 
@@ -59,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigationView = findViewById(R.id.bottomNavigationBar);
 
-        dbManager = new DatabasesManager(this, "ru");
+        DatabasesManager.changeLanguageWithVersion(this, "ru", 1);
         fragmentManager = getFragmentManager();
         productsFragment = new ProductsFragment();
         recipesFragment = new RecipesFragment();
@@ -191,9 +187,4 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //endregion
-
-
-    public static DatabasesManager getDbManager() {
-        return dbManager;
-    }
 }

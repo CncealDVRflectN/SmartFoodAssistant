@@ -31,16 +31,16 @@ public class Shop {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getAddress() {
         return address;
     }
 
-    public double getPrice() {
-        return price;
-    }
-
-    public String getCurrency() {
-        return currency;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     //endregion
@@ -48,16 +48,16 @@ public class Shop {
 
     //region Setters
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
+    public double getPrice() {
+        return price;
     }
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getCurrency() {
+        return currency;
     }
 
     public void setCurrency(String currency) {
