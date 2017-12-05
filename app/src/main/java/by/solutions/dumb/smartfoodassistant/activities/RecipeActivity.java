@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import by.solutions.dumb.smartfoodassistant.R;
+import by.solutions.dumb.smartfoodassistant.util.sql.DatabasesManager;
 import by.solutions.dumb.smartfoodassistant.util.sql.RecipesDB;
 import by.solutions.dumb.smartfoodassistant.util.sql.RecipesDBHelper;
 
@@ -35,7 +36,7 @@ public class RecipeActivity extends AppCompatActivity {
         TextView tmpTextView;
         String recipeID;
         Cursor recipe;
-        RecipesDB db = MainActivity.getDbManager().getRecipesDB();
+        RecipesDB db = DatabasesManager.getRecipesDB();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
