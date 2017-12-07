@@ -12,22 +12,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activities.MainActivity"
-            android:screenOrientation="portrait">
+            android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.ProductActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activities.ShopActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activities.SignInActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activities.RecipeActivity"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".activities.ProductActivity"/>
+        <activity android:name=".activities.ShopActivity"/>
+        <activity android:name=".activities.SignInActivity"/>
+        <activity android:name=".activities.RecipeActivity"/>
     </application>
 
 </manifest>
