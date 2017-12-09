@@ -1,39 +1,33 @@
 <resources>
     <string name="app_name">Smart Food Assistant</string>
 
-    <string name="title_recipes">Рецепты</string>
-    <string name="title_products">Продукты</string>
-    <string name="title_favorites">Избранное</string>
-    <string name="title_authentication">Авторизация</string>
-    <string name="title_account">Аккаунт</string>
-    <string name="title_add_recipe">Добавить рецепт</string>
-    <string name="title_add_product">Добавить продукт</string>
-    <string name="title_recipe_ingredients">Ингредиенты</string>
-    <string name="title_recipe_description">Приготовление</string>
+    <string name="title_recipes">Recipes</string>
+    <string name="title_products">Products</string>
+    <string name="title_favorites">Favorites</string>
+    <string name="title_authentication">Sign in</string>
+    <string name="title_account">Account</string>
+    <string name="title_recipe_ingredients">Ingredients</string>
+    <string name="title_recipe_description">Description</string>
 
-    <string name="product_name">Название продукта</string>
-    <string name="product_price">Цена</string>
-    <string name="product_currency">Валюта</string>
-    <string name="recipe_name">Название рецепта</string>
+    <string name="product_name">Product name</string>
+    <string name="product_price">Price</string>
+    <string name="product_currency">Currency</string>
+    <string name="recipe_name">Recipe name</string>
 
-    <string name="action_search">Поиск</string>
-    <string name="action_user">Аккаунт</string>
-    <string name="action_sign_out">Выйти</string>
-    <string name="action_confirm_addition">Готово</string>
+    <string name="action_search">Search</string>
+    <string name="action_user">Account</string>
+    <string name="action_sign_out">Sign out</string>
 
-    <string name="shop_address">Адрес</string>
+    <string name="shop_address">Address</string>
 
-    <string name="user_login_title">Логин:</string>
+    <string name="user_login_title">Login:</string>
     <string name="user_id_title">ID:</string>
 
-    <string name="loading">Загрузка…</string>
+    <string name="loading">Loading…</string>
 
-    <string name="sign_out_dialog_title">Выход</string>
-    <string name="sign_out_dialog_message">Вы действительно хотите выйти из аккаунта?</string>
-    <string name="sign_out_dialog_positive">Да</string>
-    <string name="sign_out_dialog_negative">Нет</string>
-
-    <string name="add_product_name_hint">Введите название</string>
-    <string name="add_product_measure_hint">Введите размерность</string>
+    <string name="sign_out_dialog_title">Sign out</string>
+    <string name="sign_out_dialog_message">Do you really want to exit?</string>
+    <string name="sign_out_dialog_positive">Yes</string>
+    <string name="sign_out_dialog_negative">No</string>
 
 </resources>

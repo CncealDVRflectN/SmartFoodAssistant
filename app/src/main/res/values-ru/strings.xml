@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Smart Food Assistant</string>
+
+    <string name="title_recipes">Рецепты</string>
+    <string name="title_products">Продукты</string>
+    <string name="title_favorites">Избранное</string>
+    <string name="title_authentication">Авторизация</string>
+    <string name="title_account">Аккаунт</string>
+    <string name="title_recipe_ingredients">Ингредиенты</string>
+    <string name="title_recipe_description">Приготовление</string>
+
+    <string name="product_name">Название продукта</string>
+    <string name="product_price">Цена</string>
+    <string name="product_currency">Валюта</string>
+    <string name="recipe_name">Название рецепта</string>
+
+    <string name="action_search">Поиск</string>
+    <string name="action_user">Аккаунт</string>
+    <string name="action_sign_out">Выйти</string>
+
+    <string name="shop_address">Адрес</string>
+
+    <string name="user_login_title">Логин:</string>
+    <string name="user_id_title">ID:</string>
+
+    <string name="loading">Загрузка…</string>
+
+    <string name="sign_out_dialog_title">Выход</string>
+    <string name="sign_out_dialog_message">Вы действительно хотите выйти из аккаунта?</string>
+    <string name="sign_out_dialog_positive">Да</string>
+    <string name="sign_out_dialog_negative">Нет</string>
+</resources>

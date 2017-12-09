@@ -12,13 +12,6 @@ import by.solutions.dumb.smartfoodassistant.activities.SignInActivity;
 
 public class AuthSignOutDialogFragment extends DialogFragment {
 
-    //region Variables
-
-    SignInActivity signInActivity;
-
-    //endregion
-
-
     //region DialogFragment lifecycle
 
     @NonNull
@@ -30,7 +23,7 @@ public class AuthSignOutDialogFragment extends DialogFragment {
         builder.setPositiveButton(getString(R.string.sign_out_dialog_positive),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        signInActivity.signOut();
+                        ((SignInActivity)getActivity()).signOut();
                     }
                 });
         builder.setNegativeButton(getString(R.string.sign_out_dialog_negative),
@@ -40,16 +33,9 @@ public class AuthSignOutDialogFragment extends DialogFragment {
                 });
         builder.setCancelable(true);
 
+//        SignInActivity
+
         return builder.create();
-    }
-
-    //endregion
-
-
-    //region Public methods
-
-    public void setSignInActivity(SignInActivity signInActivity) {
-        this.signInActivity = signInActivity;
     }
 
     //endregion

@@ -102,7 +102,6 @@ public class SignInActivity extends AppCompatActivity {
 
         fragmentManager = getSupportFragmentManager();
         signOutDialog = new AuthSignOutDialogFragment();
-        signOutDialog.setSignInActivity(this);
     }
 
     @Override

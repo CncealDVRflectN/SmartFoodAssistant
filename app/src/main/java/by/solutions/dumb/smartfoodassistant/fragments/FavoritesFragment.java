@@ -12,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import by.solutions.dumb.smartfoodassistant.R;
-import by.solutions.dumb.smartfoodassistant.activities.MainActivity;
 import by.solutions.dumb.smartfoodassistant.activities.RecipeActivity;
 import by.solutions.dumb.smartfoodassistant.util.filters.RecipesFilter;
 import by.solutions.dumb.smartfoodassistant.util.sql.DatabasesManager;
