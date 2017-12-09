@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigationView = findViewById(R.id.bottomNavigationBar);
 
-        DatabasesManager.changeLanguageWithVersion(this, "ru", 1);
+        DatabasesManager.changeLanguageWithVersion(this, DatabasesManager.LOCALE_RU, 1);
         fragmentManager = getFragmentManager();
         productsFragment = new ProductsFragment();
         recipesFragment = new RecipesFragment();

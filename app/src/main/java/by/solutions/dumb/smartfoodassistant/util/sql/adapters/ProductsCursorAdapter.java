@@ -1,4 +1,4 @@
-package by.solutions.dumb.smartfoodassistant.util.sql;
+package by.solutions.dumb.smartfoodassistant.util.sql.adapters;
 
 
 import android.content.Context;
@@ -10,6 +10,7 @@ import android.widget.CursorAdapter;
 import android.widget.TextView;
 
 import by.solutions.dumb.smartfoodassistant.R;
+import by.solutions.dumb.smartfoodassistant.util.sql.tables.ProductsTable;
 
 public class ProductsCursorAdapter extends CursorAdapter {
     private int layout;
@@ -27,6 +28,6 @@ public class ProductsCursorAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         ((TextView) view.findViewById(R.id.product_name))
-                .setText(cursor.getString(cursor.getColumnIndexOrThrow(ProductsDBHelper.NAME_COLUMN)));
+                .setText(cursor.getString(cursor.getColumnIndexOrThrow(ProductsTable.NAME_COLUMN)));
     }
 }

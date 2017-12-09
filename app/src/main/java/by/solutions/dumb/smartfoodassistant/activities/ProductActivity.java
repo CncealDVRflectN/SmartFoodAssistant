@@ -9,56 +9,44 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import by.solutions.dumb.smartfoodassistant.R;
-import by.solutions.dumb.smartfoodassistant.adapters.ShopAdapter;
-import by.solutions.dumb.smartfoodassistant.containers.Shop;
+import by.solutions.dumb.smartfoodassistant.util.sql.Database;
 import by.solutions.dumb.smartfoodassistant.util.sql.DatabasesManager;
-import by.solutions.dumb.smartfoodassistant.util.sql.ProductsDBHelper;
+import by.solutions.dumb.smartfoodassistant.util.sql.adapters.ProductPricesCursorAdapter;
+import by.solutions.dumb.smartfoodassistant.util.sql.tables.ProductsTable;
+import by.solutions.dumb.smartfoodassistant.util.sql.tables.ShopsTable;
 
 
 public class ProductActivity extends AppCompatActivity {
-
-    //region Variables
-
-    private List<Shop> shops = new ArrayList<>();
-    private ListView shopsView;
-    private ActionBar actionBar;
-
-    //endregion
-
-
     //region Activity lifecycle
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ShopAdapter shopAdapter;
+        Database db = DatabasesManager.getDatabase();
+        ActionBar actionBar;
+        ListView shopsView;
         String productID;
         Cursor product;
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
         productID = getIntent().getStringExtra("productID");
-        product = DatabasesManager.getProductsDB().getByID(productID);
-
-        testInitial();
+        product = db.getProductByID(productID);
         shopsView = findViewById(R.id.shops_list);
-        shopAdapter = new ShopAdapter(this, R.layout.shop, shops);
-        shopsView.setAdapter(shopAdapter);
+
+        shopsView.setAdapter(new ProductPricesCursorAdapter(this, db.getProductPrices(productID), R.layout.shop));
+
         actionBar = getSupportActionBar();
-        actionBar.setTitle(product.getString(product.getColumnIndex(ProductsDBHelper.NAME_COLUMN)));
+        actionBar.setTitle(product.getString(product.getColumnIndex(ProductsTable.NAME_COLUMN)));
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         shopsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(ProductActivity.this, ShopActivity.class);
-                Shop shop = (Shop) adapterView.getItemAtPosition(i);
+                Cursor shop = (Cursor) adapterView.getItemAtPosition(i);
 
-                intent.putExtra("shopName", shop.getName());
-                intent.putExtra("shopAddress", shop.getAddress());
+                intent.putExtra("shopID", shop.getString(shop.getColumnIndexOrThrow(ShopsTable.ID_COLUMN)));
 
                 startActivity(intent);
             }
@@ -76,11 +64,7 @@ public class ProductActivity extends AppCompatActivity {
 
     //region Public methods
 
-    private void testInitial() {
-        shops.add(new Shop("Гипермаркет", "ул. Нигде 43", "USD", 2342));
-        shops.add(new Shop("Супермаркет", "ул. Здесь 23", "USD", 4563));
-        shops.add(new Shop("Магазин", "ул. Там 45", "USD", 4353));
-    }
+
 
     //endregion
 }
