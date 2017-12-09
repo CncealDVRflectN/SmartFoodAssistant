@@ -15,8 +15,8 @@ import by.solutions.dumb.smartfoodassistant.R;
 import by.solutions.dumb.smartfoodassistant.activities.ProductActivity;
 import by.solutions.dumb.smartfoodassistant.util.filters.ProductsFilter;
 import by.solutions.dumb.smartfoodassistant.util.sql.DatabasesManager;
-import by.solutions.dumb.smartfoodassistant.util.sql.ProductsCursorAdapter;
-import by.solutions.dumb.smartfoodassistant.util.sql.ProductsDBHelper;
+import by.solutions.dumb.smartfoodassistant.util.sql.adapters.ProductsCursorAdapter;
+import by.solutions.dumb.smartfoodassistant.util.sql.tables.ProductsTable;
 
 
 public class ProductsFragment extends Fragment {
@@ -41,7 +41,7 @@ public class ProductsFragment extends Fragment {
 
         productsView = fragmentView.findViewById(R.id.products_list);
         productsView.setAdapter(new ProductsCursorAdapter(this.getActivity(),
-                DatabasesManager.getProductsDB().getAllDataSortedByName(), R.layout.product));
+                DatabasesManager.getDatabase().getAllProducts(), R.layout.product));
 
         productsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -49,7 +49,7 @@ public class ProductsFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), ProductActivity.class);
                 Cursor product = (Cursor) adapterView.getItemAtPosition(i);
 
-                intent.putExtra("productID", product.getString(product.getColumnIndex(ProductsDBHelper.ID_COLUMN)));
+                intent.putExtra("productID", product.getString(product.getColumnIndex(ProductsTable.ID_COLUMN)));
 
                 startActivity(intent);
             }
@@ -62,12 +62,12 @@ public class ProductsFragment extends Fragment {
 
     public void resetFilter() {
         productsView.setAdapter(new ProductsCursorAdapter(this.getActivity(),
-                DatabasesManager.getProductsDB().getAllDataSortedByName(), R.layout.product));
+                DatabasesManager.getDatabase().getAllProducts(), R.layout.product));
     }
 
     public void filter(ProductsFilter filter) {
         productsView.setAdapter(new ProductsCursorAdapter(this.getActivity(),
-                DatabasesManager.getProductsDB().getFilteredData(filter), R.layout.product));
+                DatabasesManager.getDatabase().getFilteredProducts(filter), R.layout.product));
     }
 
     //region Getters

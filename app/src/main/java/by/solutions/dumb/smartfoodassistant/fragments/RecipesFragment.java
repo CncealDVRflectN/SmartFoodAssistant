@@ -15,8 +15,8 @@ import by.solutions.dumb.smartfoodassistant.R;
 import by.solutions.dumb.smartfoodassistant.activities.RecipeActivity;
 import by.solutions.dumb.smartfoodassistant.util.filters.RecipesFilter;
 import by.solutions.dumb.smartfoodassistant.util.sql.DatabasesManager;
-import by.solutions.dumb.smartfoodassistant.util.sql.RecipesCursorAdapter;
-import by.solutions.dumb.smartfoodassistant.util.sql.RecipesDBHelper;
+import by.solutions.dumb.smartfoodassistant.util.sql.adapters.RecipesCursorAdapter;
+import by.solutions.dumb.smartfoodassistant.util.sql.tables.RecipesTable;
 
 
 public class RecipesFragment extends Fragment {
@@ -41,7 +41,7 @@ public class RecipesFragment extends Fragment {
 
         recipesView = fragmentView.findViewById(R.id.recipes_list);
         recipesView.setAdapter(new RecipesCursorAdapter(this.getActivity(),
-                DatabasesManager.getRecipesDB().getAllDataSortedByName(), R.layout.recipe));
+                DatabasesManager.getDatabase().getAllRecipes(), R.layout.recipe));
 
         recipesView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -49,7 +49,7 @@ public class RecipesFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), RecipeActivity.class);
                 Cursor recipe = (Cursor) adapterView.getItemAtPosition(i);
 
-                intent.putExtra("recipeID", recipe.getString(recipe.getColumnIndex(RecipesDBHelper.ID_COLUMN)));
+                intent.putExtra("recipeID", recipe.getString(recipe.getColumnIndex(RecipesTable.ID_COLUMN)));
 
                 startActivity(intent);
             }
@@ -62,12 +62,12 @@ public class RecipesFragment extends Fragment {
 
     public void resetFilter() {
         recipesView.setAdapter(new RecipesCursorAdapter(this.getActivity(),
-                DatabasesManager.getRecipesDB().getAllDataSortedByName(), R.layout.recipe));
+                DatabasesManager.getDatabase().getAllRecipes(), R.layout.recipe));
     }
 
     public void filter(RecipesFilter filter) {
         recipesView.setAdapter(new RecipesCursorAdapter(this.getActivity(),
-                DatabasesManager.getRecipesDB().getFilteredData(filter), R.layout.recipe));
+                DatabasesManager.getDatabase().getFilteredRecipes(filter), R.layout.recipe));
     }
 
     //region Getters
