@@ -1,4 +1,4 @@
-package by.solutions.dumb.smartfoodassistant.util.sql;
+package by.solutions.dumb.smartfoodassistant.util.sql.adapters;
 
 
 import android.content.Context;
@@ -10,6 +10,7 @@ import android.widget.CursorAdapter;
 import android.widget.TextView;
 
 import by.solutions.dumb.smartfoodassistant.R;
+import by.solutions.dumb.smartfoodassistant.util.sql.tables.RecipesTable;
 
 public class RecipesCursorAdapter extends CursorAdapter {
     private int layout;
@@ -27,6 +28,6 @@ public class RecipesCursorAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         ((TextView) view.findViewById(R.id.recipe_name))
-                .setText(cursor.getString(cursor.getColumnIndexOrThrow(RecipesDBHelper.NAME_COLUMN)));
+                .setText(cursor.getString(cursor.getColumnIndexOrThrow(RecipesTable.NAME_COLUMN)));
     }
 }
