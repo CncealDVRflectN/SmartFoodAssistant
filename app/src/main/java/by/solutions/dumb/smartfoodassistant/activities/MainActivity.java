@@ -17,6 +17,8 @@ import android.view.MenuItem;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.Locale;
+
 import by.solutions.dumb.smartfoodassistant.R;
 import by.solutions.dumb.smartfoodassistant.fragments.FavoritesFragment;
 import by.solutions.dumb.smartfoodassistant.fragments.ProductsFragment;
@@ -29,8 +31,9 @@ public class MainActivity extends AppCompatActivity {
 
     //region Variables
 
-    private static final String TAG = "MainActivity";
+    private static final String LOG_TAG = "MainActivity";
     private static final int RC_SIGN_IN = 1324;
+    private static final String CURRENT_PAGE_BUNDLE_KEY = "CurrentPageKey";
 
     private FragmentManager fragmentManager;
     private ProductsFragment productsFragment;
@@ -56,9 +59,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+//        Log.w(LOG_TAG, "OnCreate");
         bottomNavigationView = findViewById(R.id.bottomNavigationBar);
 
-        DatabasesManager.changeLanguageWithVersion(this, DatabasesManager.LOCALE_RU, 1);
+        DatabasesManager.changeLanguageWithVersion(this, Locale.getDefault().getLanguage(), 1);
         fragmentManager = getFragmentManager();
         productsFragment = new ProductsFragment();
         recipesFragment = new RecipesFragment();
@@ -81,35 +85,32 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.navigation_recipes:
                         if (currentPageId != R.id.navigation_recipes) {
-                            Log.d(TAG, "Recipes bottom button clicked");
+                            Log.d(LOG_TAG, "Recipes bottom button clicked");
                             currentPageId = R.id.navigation_recipes;
                             showFragmentById(currentPageId);
-                            Log.d(TAG, "Recipes fragment showed");
-                            productsFragment.resetFilter();
+                            Log.d(LOG_TAG, "Recipes fragment showed");
                             searchItem.collapseActionView();
-                            actionBar.setTitle(R.string.title_recipes);
+
                         }
                         return true;
                     case R.id.navigation_products:
                         if (currentPageId != R.id.navigation_products) {
-                            Log.d(TAG, "Products bottom button clicked");
+                            Log.d(LOG_TAG, "Products bottom button clicked");
                             currentPageId = R.id.navigation_products;
                             showFragmentById(currentPageId);
-                            Log.d(TAG, "Products fragment showed");
-                            recipesFragment.resetFilter();
+                            Log.d(LOG_TAG, "Products fragment showed");
                             searchItem.collapseActionView();
-                            actionBar.setTitle(R.string.title_products);
+
                         }
                         return true;
                     case R.id.navigation_favorites:
                         if (currentPageId != R.id.navigation_favorites) {
-                            Log.d(TAG, "Favorites bottom button clicked");
+                            Log.d(LOG_TAG, "Favorites bottom button clicked");
                             currentPageId = R.id.navigation_favorites;
                             showFragmentById(currentPageId);
-                            Log.d(TAG, "Favorites fragment showed");
-                            favoritesFragment.resetFilter();
+                            Log.d(LOG_TAG, "Favorites fragment showed");
                             searchItem.collapseActionView();
-                            actionBar.setTitle(R.string.title_favorites);
+
                         }
                         return true;
                 }
@@ -166,11 +167,26 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 updateUser();
             } else {
-                Log.d(TAG, "SignInActivity incorrect result");
+                Log.d(LOG_TAG, "SignInActivity incorrect result");
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt(CURRENT_PAGE_BUNDLE_KEY, currentPageId);
+        Log.d(LOG_TAG, "Save activity state");
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        currentPageId = savedInstanceState.getInt(CURRENT_PAGE_BUNDLE_KEY, R.id.navigation_recipes);
+        showFragmentById(currentPageId);
+        Log.d(LOG_TAG, "Restore Activity State");
     }
 
     //endregion
@@ -197,16 +213,22 @@ public class MainActivity extends AppCompatActivity {
                 fragmentTransaction.show(recipesFragment);
                 fragmentTransaction.hide(productsFragment);
                 fragmentTransaction.hide(favoritesFragment);
+                productsFragment.resetFilter();
+                actionBar.setTitle(R.string.title_recipes);
                 break;
             case R.id.navigation_products:
                 fragmentTransaction.hide(recipesFragment);
                 fragmentTransaction.show(productsFragment);
                 fragmentTransaction.hide(favoritesFragment);
+                recipesFragment.resetFilter();
+                actionBar.setTitle(R.string.title_products);
                 break;
             case R.id.navigation_favorites:
                 fragmentTransaction.hide(recipesFragment);
                 fragmentTransaction.hide(productsFragment);
                 fragmentTransaction.show(favoritesFragment);
+                favoritesFragment.resetFilter();
+                actionBar.setTitle(R.string.title_favorites);
                 break;
         }
         fragmentTransaction.commit();
