@@ -20,7 +20,6 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.Locale;
 
 import by.solutions.dumb.smartfoodassistant.R;
-import by.solutions.dumb.smartfoodassistant.fragments.FavoritesFragment;
 import by.solutions.dumb.smartfoodassistant.fragments.ProductsFragment;
 import by.solutions.dumb.smartfoodassistant.fragments.RecipesFragment;
 import by.solutions.dumb.smartfoodassistant.util.filters.ProductsFilter;
@@ -38,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
     private FragmentManager fragmentManager;
     private ProductsFragment productsFragment;
     private RecipesFragment recipesFragment;
-    private FavoritesFragment favoritesFragment;
     private int currentPageId;
 
     private MenuItem searchItem;
@@ -65,16 +63,13 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager = getFragmentManager();
         productsFragment = new ProductsFragment();
         recipesFragment = new RecipesFragment();
-        favoritesFragment = new FavoritesFragment();
         productsFilter = new ProductsFilter();
         recipesFilter = new RecipesFilter();
 
         currentPageId = R.id.navigation_recipes;
         addFragment(R.id.main_fragment_container, recipesFragment);
         addFragment(R.id.main_fragment_container, productsFragment);
-        addFragment(R.id.main_fragment_container, favoritesFragment);
         hideFragment(productsFragment);
-        hideFragment(favoritesFragment);
         actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.title_recipes);
 
@@ -98,16 +93,6 @@ public class MainActivity extends AppCompatActivity {
                             currentPageId = R.id.navigation_products;
                             showFragmentById(currentPageId);
                             Log.d(LOG_TAG, "Products fragment showed");
-                            searchItem.collapseActionView();
-
-                        }
-                        return true;
-                    case R.id.navigation_favorites:
-                        if (currentPageId != R.id.navigation_favorites) {
-                            Log.d(LOG_TAG, "Favorites bottom button clicked");
-                            currentPageId = R.id.navigation_favorites;
-                            showFragmentById(currentPageId);
-                            Log.d(LOG_TAG, "Favorites fragment showed");
                             searchItem.collapseActionView();
 
                         }
@@ -211,23 +196,14 @@ public class MainActivity extends AppCompatActivity {
             case R.id.navigation_recipes:
                 fragmentTransaction.show(recipesFragment);
                 fragmentTransaction.hide(productsFragment);
-                fragmentTransaction.hide(favoritesFragment);
                 productsFragment.resetFilter();
                 actionBar.setTitle(R.string.title_recipes);
                 break;
             case R.id.navigation_products:
                 fragmentTransaction.hide(recipesFragment);
                 fragmentTransaction.show(productsFragment);
-                fragmentTransaction.hide(favoritesFragment);
                 recipesFragment.resetFilter();
                 actionBar.setTitle(R.string.title_products);
-                break;
-            case R.id.navigation_favorites:
-                fragmentTransaction.hide(recipesFragment);
-                fragmentTransaction.hide(productsFragment);
-                fragmentTransaction.show(favoritesFragment);
-                favoritesFragment.resetFilter();
-                actionBar.setTitle(R.string.title_favorites);
                 break;
         }
         fragmentTransaction.commit();
