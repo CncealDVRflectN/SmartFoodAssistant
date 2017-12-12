@@ -84,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
                             showFragmentById(currentPageId);
                             Log.d(LOG_TAG, "Recipes fragment showed");
                             searchItem.collapseActionView();
-
                         }
                         return true;
                     case R.id.navigation_products:
@@ -94,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
                             showFragmentById(currentPageId);
                             Log.d(LOG_TAG, "Products fragment showed");
                             searchItem.collapseActionView();
-
                         }
                         return true;
                 }
