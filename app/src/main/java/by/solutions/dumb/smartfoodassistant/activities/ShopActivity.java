@@ -6,6 +6,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
+import java.util.Locale;
+
 import by.solutions.dumb.smartfoodassistant.R;
 import by.solutions.dumb.smartfoodassistant.util.sql.Database;
 import by.solutions.dumb.smartfoodassistant.util.sql.DatabasesManager;
@@ -18,13 +20,15 @@ public class ShopActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Database db = DatabasesManager.getDatabase();
+        Database db;
         ActionBar actionBar;
         String shopID;
         Cursor shop;
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop);
+        DatabasesManager.changeLanguageWithVersion(this, Locale.getDefault().getLanguage(), 1);
+        db = DatabasesManager.getDatabase();
         shopID = getIntent().getStringExtra("shopID");
         shop = db.getShopByID(shopID);
 

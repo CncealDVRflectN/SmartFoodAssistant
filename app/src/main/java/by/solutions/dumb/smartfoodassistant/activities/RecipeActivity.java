@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.Locale;
+
 import by.solutions.dumb.smartfoodassistant.R;
 import by.solutions.dumb.smartfoodassistant.util.sql.DatabasesManager;
 import by.solutions.dumb.smartfoodassistant.util.sql.tables.IngredientsTable;
@@ -39,6 +41,7 @@ public class RecipeActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
+        DatabasesManager.changeLanguageWithVersion(this, Locale.getDefault().getLanguage(), 1);
         recipeID = getIntent().getStringExtra("recipeID");
         recipe = DatabasesManager.getDatabase().getRecipeByID(recipeID);
 

@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.util.Locale;
+
 import by.solutions.dumb.smartfoodassistant.R;
 import by.solutions.dumb.smartfoodassistant.util.sql.Database;
 import by.solutions.dumb.smartfoodassistant.util.sql.DatabasesManager;
@@ -22,7 +24,7 @@ public class ProductActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Database db = DatabasesManager.getDatabase();
+        Database db;
         ActionBar actionBar;
         ListView shopsView;
         String productID;
@@ -30,6 +32,8 @@ public class ProductActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
+        DatabasesManager.changeLanguageWithVersion(this, Locale.getDefault().getLanguage(), 1);
+        db = DatabasesManager.getDatabase();
         productID = getIntent().getStringExtra("productID");
         product = db.getProductByID(productID);
         shopsView = findViewById(R.id.shops_list);
@@ -63,7 +67,6 @@ public class ProductActivity extends AppCompatActivity {
 
 
     //region Public methods
-
 
 
     //endregion

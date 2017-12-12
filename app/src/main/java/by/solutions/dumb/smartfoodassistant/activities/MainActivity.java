@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        Log.w(LOG_TAG, "OnCreate");
         bottomNavigationView = findViewById(R.id.bottomNavigationBar);
 
         DatabasesManager.changeLanguageWithVersion(this, Locale.getDefault().getLanguage(), 1);
