@@ -23,7 +23,7 @@ public class AuthSignOutDialogFragment extends DialogFragment {
         builder.setPositiveButton(getString(R.string.sign_out_dialog_positive),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        ((SignInActivity)getActivity()).signOut();
+                        ((SignInActivity) getActivity()).signOut();
                     }
                 });
         builder.setNegativeButton(getString(R.string.sign_out_dialog_negative),

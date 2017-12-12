@@ -77,6 +77,7 @@ public class ShopActivity extends AppCompatActivity {
                 productsView.setAdapter(new ShopCursorAdapter(ShopActivity.this,
                         shop.getString(shop.getColumnIndexOrThrow(ShopsTable.CURRENCY_COLUMN)),
                         db.getShopPrices(shopID), R.layout.product_in_shop));
+                //TODO: change getShopPrices to getFilteredShopPrices after merging
                 return false;
             }
         });

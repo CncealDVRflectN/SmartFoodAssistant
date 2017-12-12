@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,8 @@ import by.solutions.dumb.smartfoodassistant.util.sql.tables.ProductsTable;
 public class ProductsFragment extends Fragment {
 
     //region Variables
+
+    private static final String LOG_TAG = "ProductsFragment";
 
     private ListView productsView;
 
@@ -48,9 +51,10 @@ public class ProductsFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getActivity(), ProductActivity.class);
                 Cursor product = (Cursor) adapterView.getItemAtPosition(i);
+                String id = product.getString(product.getColumnIndex(ProductsTable.ID_COLUMN));
 
-                intent.putExtra("productID", product.getString(product.getColumnIndex(ProductsTable.ID_COLUMN)));
-
+                intent.putExtra("productID", id);
+                Log.d(LOG_TAG, id);
                 startActivity(intent);
             }
         });

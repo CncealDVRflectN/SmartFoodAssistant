@@ -4,6 +4,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -31,7 +32,7 @@ public class RecipeActivity extends AppCompatActivity {
         LinearLayout recipeIngredientsContainer;
         ActionBar actionBar;
         TextView recipeDescriptionView;
-        TextView tmpTextView;
+        View tmpIngredientView;
         String recipeID;
         Cursor recipe;
         Cursor ingredients;
@@ -56,15 +57,18 @@ public class RecipeActivity extends AppCompatActivity {
 
         ingredients = DatabasesManager.getDatabase().getRecipeIngredientsByID(recipeID);
         indexNameColumn = ingredients.getColumnIndexOrThrow(ProductsTable.NAME_COLUMN);
-        indexMeasureColumn = ingredients.getColumnIndexOrThrow(ProductsTable.MEASURE_COLUMN);
         indexAmountColumn = ingredients.getColumnIndexOrThrow(IngredientsTable.AMOUNT_COLUMN);
-
+        indexMeasureColumn = ingredients.getColumnIndexOrThrow(ProductsTable.MEASURE_COLUMN);
 
         while (!ingredients.isAfterLast()) {
-            tmpTextView = new TextView(this);
-            tmpTextView.setText(ingredients.getString(indexNameColumn));
-            tmpTextView.setTextSize(INGREDIENT_FONT_SIZE);
-            recipeIngredientsContainer.addView(tmpTextView);
+            tmpIngredientView = getLayoutInflater().inflate(R.layout.ingredient, null);
+            fillIngredientInfo((TextView) tmpIngredientView.findViewById(R.id.ingredient_name),
+                    ingredients.getString(indexNameColumn));
+            fillIngredientInfo((TextView) tmpIngredientView.findViewById(R.id.ingredient_amount),
+                    ingredients.getString(indexAmountColumn));
+            fillIngredientInfo((TextView) tmpIngredientView.findViewById(R.id.ingredient_measure),
+                    ingredients.getString(indexMeasureColumn));
+            recipeIngredientsContainer.addView(tmpIngredientView);
             ingredients.moveToNext();
         }
     }
@@ -76,4 +80,10 @@ public class RecipeActivity extends AppCompatActivity {
     }
 
     //endregion
+
+    private void fillIngredientInfo(TextView textView, String text) {
+        textView.setText(text);
+        textView.setTextSize(INGREDIENT_FONT_SIZE);
+    }
+
 }
