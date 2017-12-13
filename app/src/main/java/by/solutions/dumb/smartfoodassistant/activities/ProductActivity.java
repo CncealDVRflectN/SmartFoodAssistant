@@ -35,6 +35,7 @@ public class ProductActivity extends SecondaryActivity {
         final ListView shopsView;
         String productID;
 
+        showProgressDialog();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
         DatabasesManager.changeLanguageWithVersion(this, Locale.getDefault().getLanguage(), 1);

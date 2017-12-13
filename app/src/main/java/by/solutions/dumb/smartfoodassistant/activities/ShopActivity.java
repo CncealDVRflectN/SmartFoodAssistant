@@ -40,6 +40,7 @@ public class ShopActivity extends SecondaryActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        showProgressDialog();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop);
         DatabasesManager.changeLanguageWithVersion(this, Locale.getDefault().getLanguage(), 1);

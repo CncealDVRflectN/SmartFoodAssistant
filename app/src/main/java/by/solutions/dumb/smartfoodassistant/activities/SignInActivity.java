@@ -1,6 +1,5 @@
 package by.solutions.dumb.smartfoodassistant.activities;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -51,7 +50,6 @@ public class SignInActivity extends SecondaryActivity {
     private Button signInButton;
     private ActionBar actionBar;
     private MenuItem signOutItem;
-    private ProgressDialog progressDialog;
     private FragmentManager fragmentManager;
 
 
@@ -223,22 +221,6 @@ public class SignInActivity extends SecondaryActivity {
             userInfoContainerView.setVisibility(View.GONE);
             signInButton.setVisibility(View.VISIBLE);
             signOutItem.setVisible(false);
-        }
-    }
-
-    private void showProgressDialog() {
-        if (progressDialog == null) {
-            progressDialog = new ProgressDialog(this);
-            progressDialog.setMessage(getString(R.string.loading));
-            progressDialog.setIndeterminate(true);
-        }
-
-        progressDialog.show();
-    }
-
-    private void hideProgressDialog() {
-        if (progressDialog != null && progressDialog.isShowing()) {
-            progressDialog.dismiss();
         }
     }
 
