@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import by.solutions.dumb.smartfoodassistant.R;
+import by.solutions.dumb.smartfoodassistant.activities.BaseActivity;
 import by.solutions.dumb.smartfoodassistant.activities.RecipeActivity;
 import by.solutions.dumb.smartfoodassistant.util.filters.RecipesFilter;
 import by.solutions.dumb.smartfoodassistant.util.sql.DatabasesManager;
@@ -40,6 +41,7 @@ public class RecipesFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        ((BaseActivity) getActivity()).showProgressDialog();
         View fragmentView = inflater.inflate(R.layout.fragment_recipes, container, false);
 
         recipesView = fragmentView.findViewById(R.id.recipes_list);

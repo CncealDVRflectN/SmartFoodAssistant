@@ -39,6 +39,7 @@ public class RecipeActivity extends SecondaryActivity {
         int indexMeasureColumn;
         int indexAmountColumn;
 
+        showProgressDialog();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
         DatabasesManager.changeLanguageWithVersion(this, Locale.getDefault().getLanguage(), 1);

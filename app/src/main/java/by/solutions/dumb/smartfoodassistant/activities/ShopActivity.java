@@ -36,6 +36,7 @@ public class ShopActivity extends SecondaryActivity {
     protected void onCreate(Bundle savedInstanceState) {
         ActionBar actionBar;
 
+        showProgressDialog();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop);
         DatabasesManager.changeLanguageWithVersion(this, Locale.getDefault().getLanguage(), 1);

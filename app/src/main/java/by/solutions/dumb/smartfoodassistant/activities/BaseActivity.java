@@ -1,5 +1,6 @@
 package by.solutions.dumb.smartfoodassistant.activities;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,8 @@ public class BaseActivity extends AppCompatActivity {
 
     private static final String PREFERENCE_KEY_THEME_COLOR = "color_list";
     private static final String DEFAULT_THEME_COLOR = "0";
+
+    private ProgressDialog progressDialog;
 
     //endregion
 
@@ -38,6 +41,23 @@ public class BaseActivity extends AppCompatActivity {
                 return R.style.FirstCustomAppTheme;
         }
         return R.style.DefaultAppTheme;
+    }
+
+
+    public void showProgressDialog() {
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setMessage(getString(R.string.loading));
+            progressDialog.setIndeterminate(true);
+        }
+
+        progressDialog.show();
+    }
+
+    public void hideProgressDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
     }
 
     //endregion
