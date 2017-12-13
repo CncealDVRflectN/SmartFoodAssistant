@@ -29,6 +29,7 @@ public class ProductActivity extends SecondaryActivity {
         String productID;
         Cursor product;
 
+        showProgressDialog();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
         DatabasesManager.changeLanguageWithVersion(this, Locale.getDefault().getLanguage(), 1);
