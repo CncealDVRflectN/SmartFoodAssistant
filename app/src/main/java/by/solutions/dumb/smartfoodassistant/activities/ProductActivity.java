@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -16,31 +17,70 @@ import by.solutions.dumb.smartfoodassistant.util.sql.DatabasesManager;
 import by.solutions.dumb.smartfoodassistant.util.sql.adapters.ProductPricesCursorAdapter;
 import by.solutions.dumb.smartfoodassistant.util.sql.tables.ProductsTable;
 import by.solutions.dumb.smartfoodassistant.util.sql.tables.ShopsTable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 
 
 public class ProductActivity extends SecondaryActivity {
+    private static final String LOG_TAG = "ProductActivity";
+
+    private CompositeDisposable disposables;
+
     //region Activity lifecycle
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Database db;
-        ActionBar actionBar;
-        ListView shopsView;
+        final ListView shopsView;
         String productID;
-        Cursor product;
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
         DatabasesManager.changeLanguageWithVersion(this, Locale.getDefault().getLanguage(), 1);
-        db = DatabasesManager.getDatabase();
+
+        disposables = new CompositeDisposable();
         productID = getIntent().getStringExtra("productID");
-        product = db.getProductByID(productID);
         shopsView = findViewById(R.id.shops_list);
 
-        shopsView.setAdapter(new ProductPricesCursorAdapter(this, db.getProductPrices(productID), R.layout.shop));
+        disposables.add(DatabasesManager.getDatabase().getProductByID(productID)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<Cursor>() {
+            @Override
+            public void onNext(Cursor cursor) {
+                getSupportActionBar().setTitle(cursor.getString(cursor.getColumnIndex(ProductsTable.NAME_COLUMN)));
+            }
 
-        actionBar = getSupportActionBar();
-        actionBar.setTitle(product.getString(product.getColumnIndex(ProductsTable.NAME_COLUMN)));
+            @Override
+            public void onError(Throwable e) {
+                Log.e(LOG_TAG, e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        }));
+        disposables.add(DatabasesManager.getDatabase().getProductPrices(productID)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<Cursor>() {
+            @Override
+            public void onNext(Cursor cursor) {
+                shopsView.setAdapter(new ProductPricesCursorAdapter(ProductActivity.this, cursor, R.layout.shop));
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e(LOG_TAG, e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        }));
 
         shopsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -53,6 +93,14 @@ public class ProductActivity extends SecondaryActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (disposables != null) {
+            disposables.dispose();
+        }
+        super.onDestroy();
     }
 
     //endregion

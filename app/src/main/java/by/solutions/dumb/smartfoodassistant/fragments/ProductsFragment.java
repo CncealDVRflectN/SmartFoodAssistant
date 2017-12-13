@@ -18,6 +18,10 @@ import by.solutions.dumb.smartfoodassistant.util.filters.ProductsFilter;
 import by.solutions.dumb.smartfoodassistant.util.sql.DatabasesManager;
 import by.solutions.dumb.smartfoodassistant.util.sql.adapters.ProductsCursorAdapter;
 import by.solutions.dumb.smartfoodassistant.util.sql.tables.ProductsTable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 
 
 public class ProductsFragment extends Fragment {
@@ -27,6 +31,7 @@ public class ProductsFragment extends Fragment {
     private static final String LOG_TAG = "ProductsFragment";
 
     private ListView productsView;
+    private Disposable disposable;
 
     //endregion
 
@@ -43,8 +48,26 @@ public class ProductsFragment extends Fragment {
         View fragmentView = inflater.inflate(R.layout.fragment_products, container, false);
 
         productsView = fragmentView.findViewById(R.id.products_list);
-        productsView.setAdapter(new ProductsCursorAdapter(this.getActivity(),
-                DatabasesManager.getDatabase().getAllProducts(), R.layout.product));
+        disposable = DatabasesManager.getDatabase().getAllProducts()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<Cursor>() {
+                    @Override
+                    public void onNext(Cursor cursor) {
+                        productsView.setAdapter(new ProductsCursorAdapter(ProductsFragment.this.getActivity(),
+                                cursor, R.layout.product));
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(LOG_TAG, e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
 
         productsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -62,16 +85,66 @@ public class ProductsFragment extends Fragment {
         return fragmentView;
     }
 
+    @Override
+    public void onDestroy() {
+        if (disposable != null) {
+            disposable.dispose();
+        }
+        super.onDestroy();
+    }
+
     //endregion
 
     public void resetFilter() {
-        productsView.setAdapter(new ProductsCursorAdapter(this.getActivity(),
-                DatabasesManager.getDatabase().getAllProducts(), R.layout.product));
+        if (disposable != null) {
+            disposable.dispose();
+        }
+        disposable = DatabasesManager.getDatabase().getAllProducts()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<Cursor>() {
+                    @Override
+                    public void onNext(Cursor cursor) {
+                        productsView.setAdapter(new ProductsCursorAdapter(ProductsFragment.this.getActivity(),
+                                cursor, R.layout.product));
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(LOG_TAG, e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
-    public void filter(ProductsFilter filter) {
-        productsView.setAdapter(new ProductsCursorAdapter(this.getActivity(),
-                DatabasesManager.getDatabase().getFilteredProducts(filter), R.layout.product));
+    public void filter(final ProductsFilter filter) {
+        if (disposable != null) {
+            disposable.dispose();
+        }
+        disposable = DatabasesManager.getDatabase().getFilteredProducts(filter)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<Cursor>() {
+                    @Override
+                    public void onNext(Cursor cursor) {
+                        productsView.setAdapter(new ProductsCursorAdapter(ProductsFragment.this.getActivity(),
+                                cursor, R.layout.product));
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(LOG_TAG, e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     //region Getters

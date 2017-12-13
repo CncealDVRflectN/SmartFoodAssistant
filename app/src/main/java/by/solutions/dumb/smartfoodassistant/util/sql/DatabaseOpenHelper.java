@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.util.Pair;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -23,9 +24,6 @@ import by.solutions.dumb.smartfoodassistant.util.sql.tables.PricesTable;
 import by.solutions.dumb.smartfoodassistant.util.sql.tables.ProductsTable;
 import by.solutions.dumb.smartfoodassistant.util.sql.tables.RecipesTable;
 import by.solutions.dumb.smartfoodassistant.util.sql.tables.ShopsTable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.observers.DisposableObserver;
-import io.reactivex.schedulers.Schedulers;
 
 public class DatabaseOpenHelper extends SQLiteOpenHelper {
     private final String DATABASE_NAME;
@@ -224,93 +222,30 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(final SQLiteDatabase db) {
         FirebaseREST firebaseDB = new FirebaseREST("https://smartfoodassistant.firebaseio.com");
-        firebaseDB.get("shops")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableObserver<String>() {
-            @Override
-            public void onNext(String data) {
-                JSONParser parser = new JSONParser();
-                JSONObject shops;
-                try {
-                    shops = (JSONObject) parser.parse(data);
-                    createShopsTable(db, shops);
-                    createPricesTable(db, shops);
-                } catch (ParseException e) {
-                    Log.e(DATABASE_NAME, e.getMessage());
-                    db.setVersion(1);
-                }
-            }
+        JSONParser parser = new JSONParser();
+        JSONObject shops;
 
-            @Override
-            public void onError(Throwable e) {
-                Log.e(DATABASE_NAME, e.getMessage());
-                db.setVersion(1);
-            }
+        try {
+            shops = (JSONObject) parser.parse(firebaseDB.get("shops"));
 
-            @Override
-            public void onComplete() {
-
-            }
-        });
-        firebaseDB.get(LANGUAGE.toLowerCase(), "products")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableObserver<String>() {
-            @Override
-            public void onNext(String data) {
-                JSONParser parser = new JSONParser();
-
-                try {
-                    createProductsTable(db, (JSONObject) parser.parse(data));
-                } catch (ParseException e) {
-                    Log.e(DATABASE_NAME, e.getMessage());
-                    db.setVersion(1);
-                }
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.e(DATABASE_NAME, e.getMessage());
-                db.setVersion(1);
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        });
-        firebaseDB.get(LANGUAGE.toLowerCase(), "recipes")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableObserver<String>() {
-            @Override
-            public void onNext(String data) {
-                JSONParser parser = new JSONParser();
-
-                try {
-                    createRecipesTable(db, (JSONObject) parser.parse(data));
-                } catch (ParseException e) {
-                    Log.e(DATABASE_NAME, e.getMessage());
-                    db.setVersion(1);
-                }
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.e(DATABASE_NAME, e.getMessage());
-                db.setVersion(1);
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        });
+            createProductsTable(db, (JSONObject) parser.parse(firebaseDB.get(LANGUAGE.toLowerCase(), "products")));
+            createRecipesTable(db, (JSONObject) parser.parse(firebaseDB.get(LANGUAGE.toLowerCase(), "recipes")));
+            createShopsTable(db, shops);
+            createPricesTable(db, shops);
+        } catch (ParseException e) {
+            Log.e(DATABASE_NAME, e.getMessage());
+        }
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        db.execSQL("DROP TABLE IF EXISTS " + PRODUCTS_TABLE.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + RECIPES_TABLE.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + PRICES_TABLE.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + SHOPS_TABLE.TABLE_NAME);
+        for (String id : INGREDIENTS_TABLES.keySet()) {
+            db.execSQL("DROP TABLE IF EXISTS " + INGREDIENTS_TABLES.get(id).TABLE_NAME);
+        }
+        onCreate(db);
     }
 }

@@ -16,8 +16,12 @@ import by.solutions.dumb.smartfoodassistant.R;
 import by.solutions.dumb.smartfoodassistant.activities.RecipeActivity;
 import by.solutions.dumb.smartfoodassistant.util.filters.RecipesFilter;
 import by.solutions.dumb.smartfoodassistant.util.sql.DatabasesManager;
-import by.solutions.dumb.smartfoodassistant.util.sql.adapters.RecipesCursorAdapter;
+import by.solutions.dumb.smartfoodassistant.util.sql.adapters.ProductsCursorAdapter;
 import by.solutions.dumb.smartfoodassistant.util.sql.tables.RecipesTable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 
 
 public class RecipesFragment extends Fragment {
@@ -27,6 +31,7 @@ public class RecipesFragment extends Fragment {
     private static final String LOG_TAG = "RecipesFragment";
 
     private ListView recipesView;
+    private Disposable disposable;
 
     //endregion
 
@@ -43,8 +48,26 @@ public class RecipesFragment extends Fragment {
         View fragmentView = inflater.inflate(R.layout.fragment_recipes, container, false);
 
         recipesView = fragmentView.findViewById(R.id.recipes_list);
-        recipesView.setAdapter(new RecipesCursorAdapter(this.getActivity(),
-                DatabasesManager.getDatabase().getAllRecipes(), R.layout.recipe));
+        disposable = DatabasesManager.getDatabase().getAllRecipes()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<Cursor>() {
+                    @Override
+                    public void onNext(Cursor cursor) {
+                        recipesView.setAdapter(new ProductsCursorAdapter(RecipesFragment.this.getActivity(),
+                                cursor, R.layout.product));
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(LOG_TAG, e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
 
         recipesView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -62,16 +85,66 @@ public class RecipesFragment extends Fragment {
         return fragmentView;
     }
 
+    @Override
+    public void onDestroy() {
+        if (disposable != null) {
+            disposable.dispose();
+        }
+        super.onDestroy();
+    }
+
     //endregion
 
     public void resetFilter() {
-        recipesView.setAdapter(new RecipesCursorAdapter(this.getActivity(),
-                DatabasesManager.getDatabase().getAllRecipes(), R.layout.recipe));
+        if (disposable != null) {
+            disposable.dispose();
+        }
+        disposable = DatabasesManager.getDatabase().getAllRecipes()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<Cursor>() {
+                    @Override
+                    public void onNext(Cursor cursor) {
+                        recipesView.setAdapter(new ProductsCursorAdapter(RecipesFragment.this.getActivity(),
+                                cursor, R.layout.product));
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(LOG_TAG, e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     public void filter(RecipesFilter filter) {
-        recipesView.setAdapter(new RecipesCursorAdapter(this.getActivity(),
-                DatabasesManager.getDatabase().getFilteredRecipes(filter), R.layout.recipe));
+        if (disposable != null) {
+            disposable.dispose();
+        }
+        disposable = DatabasesManager.getDatabase().getFilteredRecipes(filter)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<Cursor>() {
+                    @Override
+                    public void onNext(Cursor cursor) {
+                        recipesView.setAdapter(new ProductsCursorAdapter(RecipesFragment.this.getActivity(),
+                                cursor, R.layout.product));
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(LOG_TAG, e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     //region Getters
