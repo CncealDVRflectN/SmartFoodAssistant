@@ -11,13 +11,12 @@
         android:id="@+id/main_fragment_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="10"/>
+        android:layout_weight="1"/>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottomNavigationBar"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="?attr/actionBarSize"
         android:background="?android:attr/windowBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

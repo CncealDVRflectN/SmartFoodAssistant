@@ -13,4 +13,19 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        style="@style/ListElementMedium"
+        android:id="@+id/product_price"
+        android:layout_marginEnd="4dp"
+        android:text="@string/product_price"
+        app:layout_constraintRight_toLeftOf="@id/product_currency"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        style="@style/ListElementMedium"
+        android:id="@+id/product_currency"
+        android:text="@string/product_currency"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

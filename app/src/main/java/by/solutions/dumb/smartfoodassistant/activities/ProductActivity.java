@@ -4,10 +4,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import java.util.Locale;
 
 import by.solutions.dumb.smartfoodassistant.R;
 import by.solutions.dumb.smartfoodassistant.util.sql.Database;
@@ -17,12 +18,12 @@ import by.solutions.dumb.smartfoodassistant.util.sql.tables.ProductsTable;
 import by.solutions.dumb.smartfoodassistant.util.sql.tables.ShopsTable;
 
 
-public class ProductActivity extends AppCompatActivity {
+public class ProductActivity extends SecondaryActivity {
     //region Activity lifecycle
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Database db = DatabasesManager.getDatabase();
+        Database db;
         ActionBar actionBar;
         ListView shopsView;
         String productID;
@@ -30,6 +31,8 @@ public class ProductActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
+        DatabasesManager.changeLanguageWithVersion(this, Locale.getDefault().getLanguage(), 1);
+        db = DatabasesManager.getDatabase();
         productID = getIntent().getStringExtra("productID");
         product = db.getProductByID(productID);
         shopsView = findViewById(R.id.shops_list);
@@ -38,7 +41,6 @@ public class ProductActivity extends AppCompatActivity {
 
         actionBar = getSupportActionBar();
         actionBar.setTitle(product.getString(product.getColumnIndex(ProductsTable.NAME_COLUMN)));
-        actionBar.setDisplayHomeAsUpEnabled(true);
 
         shopsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -53,17 +55,10 @@ public class ProductActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        finish();
-        return true;
-    }
-
     //endregion
 
 
     //region Public methods
-
 
 
     //endregion

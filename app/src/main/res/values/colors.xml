@@ -3,6 +3,11 @@
     <color name="colorPrimary">#bb0000</color>
     <color name="colorPrimaryDark">#830000</color>
     <color name="colorAccent">#000000</color>
+
+    <color name="secondColorPrimary">#3F51B5</color>
+    <color name="secondColorPrimaryDark">#303F9F</color>
+    <color name="secondColorAccent">#FF4081</color>
+
     <color name="listBackgroundColor">#ffffff</color>>
     <color name="listTextColor">#7c7c7c</color>
 </resources>
