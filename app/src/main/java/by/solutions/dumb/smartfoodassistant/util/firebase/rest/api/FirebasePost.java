@@ -1,7 +1,6 @@
 package by.solutions.dumb.smartfoodassistant.util.firebase.rest.api;
 
 
-import android.os.AsyncTask;
 import android.util.Log;
 
 import java.io.IOException;
@@ -10,11 +9,11 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-class FirebasePatchTask extends AsyncTask<String, Void, Void> {
-    private final String LOG_TAG = "FirebasePATCH";
+class FirebasePost {
+    private final String LOG_TAG = "FirebasePOST";
     private URL url;
 
-    FirebasePatchTask(String url) {
+    FirebasePost(String url) {
         try {
             this.url = new URL(url.trim());
         } catch (MalformedURLException e) {
@@ -22,8 +21,7 @@ class FirebasePatchTask extends AsyncTask<String, Void, Void> {
         }
     }
 
-    @Override
-    protected Void doInBackground(String... args) {
+    void postData(String... args) throws IOException {
         HttpURLConnection connection = null;
         PrintWriter writer;
         StringBuilder response = new StringBuilder("Firebase response: ");
@@ -31,8 +29,8 @@ class FirebasePatchTask extends AsyncTask<String, Void, Void> {
         try {
             connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);
-            connection.setRequestMethod("PATCH");
-            connection.setReadTimeout(10000);
+            connection.setRequestMethod("POST");
+            connection.setReadTimeout(5000);
             connection.connect();
 
             writer = new PrintWriter(connection.getOutputStream());
@@ -47,16 +45,13 @@ class FirebasePatchTask extends AsyncTask<String, Void, Void> {
             Log.d(LOG_TAG, response.toString());
 
             if (connection.getResponseCode() != 200) {
-                Log.e(LOG_TAG, "Something went wrong with Firebase: " + url);
+                Log.e(LOG_TAG, "Can't post data on Firebase: " + url);
+                throw new IOException("Can't post data on Firebase.");
             }
-        } catch (IOException e) {
-            Log.e(LOG_TAG, e.toString());
         } finally {
             if (connection != null) {
                 connection.disconnect();
             }
         }
-
-        return null;
     }
 }

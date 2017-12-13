@@ -8,6 +8,16 @@ import java.net.URLEncoder;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import io.reactivex.Completable;
+import io.reactivex.CompletableEmitter;
+import io.reactivex.CompletableOnSubscribe;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
+
 public class FirebaseREST {
     private final String LOG_TAG = "FirebaseREST";
     private final String DB_PATH;
@@ -63,67 +73,103 @@ public class FirebaseREST {
         return urlBuilder.toString();
     }
 
-    public String get(String... pathArgs) {
-        String result = null;
-        FirebaseGetTask getTask = new FirebaseGetTask(buildURL(pathArgs));
-        getTask.execute();
-        try {
-            result = getTask.get();
-        } catch (InterruptedException | ExecutionException e) {
-            Log.e(LOG_TAG, e.toString());
-        }
-        return result;
+    public Observable<String> get(final String... pathArgs) {
+        return Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(ObservableEmitter<String> e) throws Exception {
+                e.onNext(new FirebaseGet(buildURL(pathArgs)).getData());
+                e.onComplete();
+            }
+        });
     }
 
-    public String get(List<String> pathArgs) {
-        String result = null;
-        FirebaseGetTask getTask = new FirebaseGetTask(buildURL(pathArgs));
-        getTask.execute();
-        try {
-            result = getTask.get();
-        } catch (InterruptedException | ExecutionException e) {
-            Log.e(LOG_TAG, e.toString());
-        }
-        return result;
+    public Observable<String> get(final List<String> pathArgs) {
+        return Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(ObservableEmitter<String> e) throws Exception {
+                e.onNext(new FirebaseGet(buildURL(pathArgs)).getData());
+                e.onComplete();
+            }
+        });
     }
 
-    public void put(String dataJSON, String... pathArgs) {
-        FirebasePutTask putTask = new FirebasePutTask(buildURL(pathArgs));
-        putTask.execute(dataJSON);
+    public Completable put(final String dataJSON, final String... pathArgs) {
+        return Completable.create(new CompletableOnSubscribe() {
+            @Override
+            public void subscribe(CompletableEmitter e) throws Exception {
+                new FirebasePut(buildURL(pathArgs)).putData(dataJSON);
+                e.onComplete();
+            }
+        });
     }
 
-    public void put(String dataJSON, List<String> pathArgs) {
-        FirebasePutTask putTask = new FirebasePutTask(buildURL(pathArgs));
-        putTask.execute(dataJSON);
+    public Completable put(final String dataJSON, final List<String> pathArgs) {
+        return Completable.create(new CompletableOnSubscribe() {
+            @Override
+            public void subscribe(CompletableEmitter e) throws Exception {
+                new FirebasePut(buildURL(pathArgs)).putData(dataJSON);
+                e.onComplete();
+            }
+        });
     }
 
-    public void post(String dataJSON, String... pathArgs) {
-        FirebasePostTask postTask = new FirebasePostTask(buildURL(pathArgs));
-        postTask.execute(dataJSON);
+    public Completable post(final String dataJSON, final String... pathArgs) {
+        return Completable.create(new CompletableOnSubscribe() {
+            @Override
+            public void subscribe(CompletableEmitter e) throws Exception {
+                new FirebasePost(buildURL(pathArgs)).postData(dataJSON);
+                e.onComplete();
+            }
+        });
     }
 
-    public void post(String dataJSON, List<String> pathArgs) {
-        FirebasePostTask postTask = new FirebasePostTask(buildURL(pathArgs));
-        postTask.execute(dataJSON);
+    public Completable post(final String dataJSON, final List<String> pathArgs) {
+        return Completable.create(new CompletableOnSubscribe() {
+            @Override
+            public void subscribe(CompletableEmitter e) throws Exception {
+                new FirebasePost(buildURL(pathArgs)).postData(dataJSON);
+                e.onComplete();
+            }
+        });
     }
 
-    public void patch(String dataJSON, String... pathArgs) {
-        FirebasePatchTask patchTask = new FirebasePatchTask(buildURL(pathArgs));
-        patchTask.execute(dataJSON);
+    public Completable patch(final String dataJSON, final String... pathArgs) {
+        return Completable.create(new CompletableOnSubscribe() {
+            @Override
+            public void subscribe(CompletableEmitter e) throws Exception {
+                new FirebasePatch(buildURL(pathArgs)).patchData(dataJSON);
+                e.onComplete();
+            }
+        });
     }
 
-    public void patch(String dataJSON, List<String> pathArgs) {
-        FirebasePatchTask patchTask = new FirebasePatchTask(buildURL(pathArgs));
-        patchTask.execute(dataJSON);
+    public Completable patch(final String dataJSON, final List<String> pathArgs) {
+        return Completable.create(new CompletableOnSubscribe() {
+            @Override
+            public void subscribe(CompletableEmitter e) throws Exception {
+                new FirebasePatch(buildURL(pathArgs)).patchData(dataJSON);
+                e.onComplete();
+            }
+        });
     }
 
-    public void delete(String... pathArgs) {
-        FirebaseDeleteTask deleteTask = new FirebaseDeleteTask(buildURL(pathArgs));
-        deleteTask.execute();
+    public Completable delete(final String... pathArgs) {
+        return Completable.create(new CompletableOnSubscribe() {
+            @Override
+            public void subscribe(CompletableEmitter e) throws Exception {
+                new FirebaseDelete(buildURL(pathArgs)).deleteData();
+                e.onComplete();
+            }
+        });
     }
 
-    public void delete(List<String> pathArgs) {
-        FirebaseDeleteTask deleteTask = new FirebaseDeleteTask(buildURL(pathArgs));
-        deleteTask.execute();
+    public Completable delete(final List<String> pathArgs) {
+        return Completable.create(new CompletableOnSubscribe() {
+            @Override
+            public void subscribe(CompletableEmitter e) throws Exception {
+                new FirebaseDelete(buildURL(pathArgs)).deleteData();
+                e.onComplete();
+            }
+        });
     }
 }

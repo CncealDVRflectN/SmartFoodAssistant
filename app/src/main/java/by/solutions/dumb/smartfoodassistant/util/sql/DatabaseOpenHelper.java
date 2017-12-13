@@ -23,6 +23,9 @@ import by.solutions.dumb.smartfoodassistant.util.sql.tables.PricesTable;
 import by.solutions.dumb.smartfoodassistant.util.sql.tables.ProductsTable;
 import by.solutions.dumb.smartfoodassistant.util.sql.tables.RecipesTable;
 import by.solutions.dumb.smartfoodassistant.util.sql.tables.ShopsTable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 
 public class DatabaseOpenHelper extends SQLiteOpenHelper {
     private final String DATABASE_NAME;
@@ -219,21 +222,91 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db) {
+    public void onCreate(final SQLiteDatabase db) {
         FirebaseREST firebaseDB = new FirebaseREST("https://smartfoodassistant.firebaseio.com");
-        JSONParser parser = new JSONParser();
-        JSONObject shops;
+        firebaseDB.get("shops")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableObserver<String>() {
+            @Override
+            public void onNext(String data) {
+                JSONParser parser = new JSONParser();
+                JSONObject shops;
+                try {
+                    shops = (JSONObject) parser.parse(data);
+                    createShopsTable(db, shops);
+                    createPricesTable(db, shops);
+                } catch (ParseException e) {
+                    Log.e(DATABASE_NAME, e.getMessage());
+                    db.setVersion(1);
+                }
+            }
 
-        try {
-            shops = (JSONObject) parser.parse(firebaseDB.get("shops"));
+            @Override
+            public void onError(Throwable e) {
+                Log.e(DATABASE_NAME, e.getMessage());
+                db.setVersion(1);
+            }
 
-            createProductsTable(db, (JSONObject) parser.parse(firebaseDB.get(LANGUAGE.toLowerCase(), "products")));
-            createRecipesTable(db, (JSONObject) parser.parse(firebaseDB.get(LANGUAGE.toLowerCase(), "recipes")));
-            createShopsTable(db, shops);
-            createPricesTable(db, shops);
-        } catch (ParseException e) {
-            Log.e(DATABASE_NAME, e.getMessage());
-        }
+            @Override
+            public void onComplete() {
+
+            }
+        });
+        firebaseDB.get(LANGUAGE.toLowerCase(), "products")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableObserver<String>() {
+            @Override
+            public void onNext(String data) {
+                JSONParser parser = new JSONParser();
+
+                try {
+                    createProductsTable(db, (JSONObject) parser.parse(data));
+                } catch (ParseException e) {
+                    Log.e(DATABASE_NAME, e.getMessage());
+                    db.setVersion(1);
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e(DATABASE_NAME, e.getMessage());
+                db.setVersion(1);
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+        firebaseDB.get(LANGUAGE.toLowerCase(), "recipes")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableObserver<String>() {
+            @Override
+            public void onNext(String data) {
+                JSONParser parser = new JSONParser();
+
+                try {
+                    createRecipesTable(db, (JSONObject) parser.parse(data));
+                } catch (ParseException e) {
+                    Log.e(DATABASE_NAME, e.getMessage());
+                    db.setVersion(1);
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e(DATABASE_NAME, e.getMessage());
+                db.setVersion(1);
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
     }
 
     @Override

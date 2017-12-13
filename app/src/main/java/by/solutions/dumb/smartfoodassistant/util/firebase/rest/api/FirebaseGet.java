@@ -1,7 +1,6 @@
 package by.solutions.dumb.smartfoodassistant.util.firebase.rest.api;
 
 
-import android.os.AsyncTask;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -11,11 +10,13 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-class FirebaseGetTask extends AsyncTask<Void, Void, String> {
+import io.reactivex.Observable;
+
+class FirebaseGet {
     private final String LOG_TAG = "FirebaseGET";
     private URL url;
 
-    FirebaseGetTask(String url) {
+    FirebaseGet(String url) {
         try {
             this.url = new URL(url.trim());
         } catch (MalformedURLException e) {
@@ -23,8 +24,7 @@ class FirebaseGetTask extends AsyncTask<Void, Void, String> {
         }
     }
 
-    @Override
-    protected String doInBackground(Void... args) {
+    String getData() throws IOException {
         HttpURLConnection connection = null;
         BufferedReader reader;
         String line;
@@ -35,7 +35,7 @@ class FirebaseGetTask extends AsyncTask<Void, Void, String> {
             connection = (HttpURLConnection) url.openConnection();
             connection.setDoInput(true);
             connection.setRequestMethod("GET");
-            connection.setReadTimeout(10000);
+            connection.setReadTimeout(5000);
             connection.connect();
 
             response.append(connection.getResponseCode());
@@ -49,10 +49,9 @@ class FirebaseGetTask extends AsyncTask<Void, Void, String> {
                     result.append(line);
                 }
             } else {
-                Log.e(LOG_TAG, "Something went wrong with Firebase: " + url);
+                Log.e(LOG_TAG, "Can't get data from Firebase: " + url);
+                throw new IOException("Can't get data from Firebase.");
             }
-        } catch (IOException e) {
-            Log.e(LOG_TAG, e.toString());
         } finally {
             if (connection != null) {
                 connection.disconnect();
