@@ -2,7 +2,6 @@ package by.solutions.dumb.smartfoodassistant.activities;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -55,56 +54,57 @@ public class RecipeActivity extends SecondaryActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableObserver<Cursor>() {
-            @Override
-            public void onNext(Cursor cursor) {
-                getSupportActionBar().setTitle(cursor.getString(cursor.getColumnIndex(RecipesTable.NAME_COLUMN)));
-                recipeDescriptionView.setText(cursor.getString(cursor.getColumnIndex(RecipesTable.INSTRUCTION_COLUMN)));
-            }
+                    @Override
+                    public void onNext(Cursor cursor) {
+                        getSupportActionBar().setTitle(cursor.getString(cursor.getColumnIndex(RecipesTable.NAME_COLUMN)));
+                        recipeDescriptionView.setText(cursor.getString(cursor.getColumnIndex(RecipesTable.INSTRUCTION_COLUMN)));
+                    }
 
-            @Override
-            public void onError(Throwable e) {
-                Log.e(LOG_TAG, e.getMessage());
-            }
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(LOG_TAG, e.getMessage());
+                    }
 
-            @Override
-            public void onComplete() {
+                    @Override
+                    public void onComplete() {
 
-            }
-        }));
+                    }
+                }));
         disposables.add(DatabasesManager.getDatabase().getRecipeIngredientsByID(recipeID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableObserver<Cursor>() {
-            @Override
-            public void onNext(Cursor cursor) {
-                View tmpIngredientView;
-                int indexNameColumn = cursor.getColumnIndexOrThrow(ProductsTable.NAME_COLUMN);
-                int indexAmountColumn = cursor.getColumnIndexOrThrow(IngredientsTable.AMOUNT_COLUMN);
-                int indexMeasureColumn = cursor.getColumnIndexOrThrow(ProductsTable.MEASURE_COLUMN);
+                    @Override
+                    public void onNext(Cursor cursor) {
+                        View tmpIngredientView;
+                        int indexNameColumn = cursor.getColumnIndexOrThrow(ProductsTable.NAME_COLUMN);
+                        int indexAmountColumn = cursor.getColumnIndexOrThrow(IngredientsTable.AMOUNT_COLUMN);
+                        int indexMeasureColumn = cursor.getColumnIndexOrThrow(ProductsTable.MEASURE_COLUMN);
 
-                while (!cursor.isAfterLast()) {
-                    tmpIngredientView = getLayoutInflater().inflate(R.layout.ingredient, null);
-                    fillIngredientInfo((TextView) tmpIngredientView.findViewById(R.id.ingredient_name),
-                            cursor.getString(indexNameColumn));
-                    fillIngredientInfo((TextView) tmpIngredientView.findViewById(R.id.ingredient_amount),
-                            cursor.getString(indexAmountColumn));
-                    fillIngredientInfo((TextView) tmpIngredientView.findViewById(R.id.ingredient_measure),
-                            cursor.getString(indexMeasureColumn));
-                    recipeIngredientsContainer.addView(tmpIngredientView);
-                    cursor.moveToNext();
-                }
-            }
+                        while (!cursor.isAfterLast()) {
+                            tmpIngredientView = getLayoutInflater().inflate(R.layout.ingredient, null);
+                            fillIngredientInfo((TextView) tmpIngredientView.findViewById(R.id.ingredient_name),
+                                    cursor.getString(indexNameColumn));
+                            fillIngredientInfo((TextView) tmpIngredientView.findViewById(R.id.ingredient_amount),
+                                    cursor.getString(indexAmountColumn));
+                            fillIngredientInfo((TextView) tmpIngredientView.findViewById(R.id.ingredient_measure),
+                                    cursor.getString(indexMeasureColumn));
+                            recipeIngredientsContainer.addView(tmpIngredientView);
+                            cursor.moveToNext();
+                        }
+                    }
 
-            @Override
-            public void onError(Throwable e) {
-                Log.e(LOG_TAG, e.getMessage());
-            }
+                    @Override
+                    public void onError(Throwable e) {
+                        hideProgressDialog();
+                        Log.e(LOG_TAG, e.getMessage());
+                    }
 
-            @Override
-            public void onComplete() {
-
-            }
-        }));
+                    @Override
+                    public void onComplete() {
+                        hideProgressDialog();
+                    }
+                }));
     }
 
     @Override

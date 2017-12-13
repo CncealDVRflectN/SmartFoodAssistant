@@ -52,44 +52,45 @@ public class ShopActivity extends SecondaryActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableObserver<Cursor>() {
-            @Override
-            public void onNext(final Cursor cursorShop) {
-                ActionBar actionBar = getSupportActionBar();
-                actionBar.setTitle(cursorShop.getString(cursorShop.getColumnIndexOrThrow(ShopsTable.NAME_COLUMN)));
-                actionBar.setSubtitle(cursorShop.getString(cursorShop.getColumnIndexOrThrow(ShopsTable.ADDRESS_COLUMN)));
-                DatabasesManager.getDatabase().getShopPrices(shopID)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeWith(new DisposableObserver<Cursor>() {
-                            @Override
-                            public void onNext(Cursor cursorPrices) {
-                                productsView.setAdapter(new ShopCursorAdapter(ShopActivity.this,
-                                        cursorShop.getString(cursorShop.getColumnIndexOrThrow(ShopsTable.CURRENCY_COLUMN)),
-                                        cursorPrices, R.layout.product_in_shop));
-                            }
+                    @Override
+                    public void onNext(final Cursor cursorShop) {
+                        ActionBar actionBar = getSupportActionBar();
+                        actionBar.setTitle(cursorShop.getString(cursorShop.getColumnIndexOrThrow(ShopsTable.NAME_COLUMN)));
+                        actionBar.setSubtitle(cursorShop.getString(cursorShop.getColumnIndexOrThrow(ShopsTable.ADDRESS_COLUMN)));
+                        DatabasesManager.getDatabase().getShopPrices(shopID)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribeWith(new DisposableObserver<Cursor>() {
+                                    @Override
+                                    public void onNext(Cursor cursorPrices) {
+                                        productsView.setAdapter(new ShopCursorAdapter(ShopActivity.this,
+                                                cursorShop.getString(cursorShop.getColumnIndexOrThrow(ShopsTable.CURRENCY_COLUMN)),
+                                                cursorPrices, R.layout.product_in_shop));
+                                    }
 
-                            @Override
-                            public void onError(Throwable e) {
-                                Log.e(LOG_TAG, e.getMessage());
-                            }
+                                    @Override
+                                    public void onError(Throwable e) {
+                                        hideProgressDialog();
+                                        Log.e(LOG_TAG, e.getMessage());
+                                    }
 
-                            @Override
-                            public void onComplete() {
+                                    @Override
+                                    public void onComplete() {
+                                        hideProgressDialog();
+                                    }
+                                });
+                    }
 
-                            }
-                        });
-            }
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(LOG_TAG, e.getMessage());
+                    }
 
-            @Override
-            public void onError(Throwable e) {
-                Log.e(LOG_TAG, e.getMessage());
-            }
+                    @Override
+                    public void onComplete() {
 
-            @Override
-            public void onComplete() {
-
-            }
-        });
+                    }
+                });
     }
 
     @Override

@@ -62,12 +62,13 @@ public class RecipesFragment extends Fragment {
 
                     @Override
                     public void onError(Throwable e) {
+                        ((BaseActivity) getActivity()).hideProgressDialog();
                         Log.e(LOG_TAG, e.getMessage());
                     }
 
                     @Override
                     public void onComplete() {
-
+                        ((BaseActivity) getActivity()).hideProgressDialog();
                     }
                 });
 
@@ -113,12 +114,13 @@ public class RecipesFragment extends Fragment {
 
                     @Override
                     public void onError(Throwable e) {
+                        ((BaseActivity) getActivity()).hideProgressDialog();
                         Log.e(LOG_TAG, e.getMessage());
                     }
 
                     @Override
                     public void onComplete() {
-
+                        ((BaseActivity) getActivity()).hideProgressDialog();
                     }
                 });
     }
@@ -139,12 +141,13 @@ public class RecipesFragment extends Fragment {
 
                     @Override
                     public void onError(Throwable e) {
+                        ((BaseActivity) getActivity()).hideProgressDialog();
                         Log.e(LOG_TAG, e.getMessage());
                     }
 
                     @Override
                     public void onComplete() {
-
+                        ((BaseActivity) getActivity()).hideProgressDialog();
                     }
                 });
     }

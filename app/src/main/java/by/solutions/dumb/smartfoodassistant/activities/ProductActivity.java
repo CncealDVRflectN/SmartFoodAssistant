@@ -3,7 +3,6 @@ package by.solutions.dumb.smartfoodassistant.activities;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,7 +11,6 @@ import android.widget.ListView;
 import java.util.Locale;
 
 import by.solutions.dumb.smartfoodassistant.R;
-import by.solutions.dumb.smartfoodassistant.util.sql.Database;
 import by.solutions.dumb.smartfoodassistant.util.sql.DatabasesManager;
 import by.solutions.dumb.smartfoodassistant.util.sql.adapters.ProductPricesCursorAdapter;
 import by.solutions.dumb.smartfoodassistant.util.sql.tables.ProductsTable;
@@ -48,40 +46,42 @@ public class ProductActivity extends SecondaryActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableObserver<Cursor>() {
-            @Override
-            public void onNext(Cursor cursor) {
-                getSupportActionBar().setTitle(cursor.getString(cursor.getColumnIndex(ProductsTable.NAME_COLUMN)));
-            }
+                    @Override
+                    public void onNext(Cursor cursor) {
+                        getSupportActionBar().setTitle(cursor.getString(cursor.getColumnIndex(ProductsTable.NAME_COLUMN)));
+                    }
 
-            @Override
-            public void onError(Throwable e) {
-                Log.e(LOG_TAG, e.getMessage());
-            }
+                    @Override
+                    public void onError(Throwable e) {
 
-            @Override
-            public void onComplete() {
+                        Log.e(LOG_TAG, e.getMessage());
+                    }
 
-            }
-        }));
+                    @Override
+                    public void onComplete() {
+
+                    }
+                }));
         disposables.add(DatabasesManager.getDatabase().getProductPrices(productID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableObserver<Cursor>() {
-            @Override
-            public void onNext(Cursor cursor) {
-                shopsView.setAdapter(new ProductPricesCursorAdapter(ProductActivity.this, cursor, R.layout.shop));
-            }
+                    @Override
+                    public void onNext(Cursor cursor) {
+                        shopsView.setAdapter(new ProductPricesCursorAdapter(ProductActivity.this, cursor, R.layout.shop));
+                    }
 
-            @Override
-            public void onError(Throwable e) {
-                Log.e(LOG_TAG, e.getMessage());
-            }
+                    @Override
+                    public void onError(Throwable e) {
+                        hideProgressDialog();
+                        Log.e(LOG_TAG, e.getMessage());
+                    }
 
-            @Override
-            public void onComplete() {
-
-            }
-        }));
+                    @Override
+                    public void onComplete() {
+                        hideProgressDialog();
+                    }
+                }));
 
         shopsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
