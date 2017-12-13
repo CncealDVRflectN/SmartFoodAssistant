@@ -11,6 +11,7 @@ import android.util.Log;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import by.solutions.dumb.smartfoodassistant.R;
 import by.solutions.dumb.smartfoodassistant.util.firebase.rest.api.FirebaseREST;
 
 public class UpdatesChecker extends Service {
@@ -33,7 +34,10 @@ public class UpdatesChecker extends Service {
         long currentVersion;
         try {
             currentVersion = (Long) parser.parse(firebase.get("version"));
-            PreferenceManager.getDefaultSharedPreferences(this).edit().putLong("current_version", currentVersion).apply();
+            PreferenceManager.getDefaultSharedPreferences(this)
+                    .edit()
+                    .putLong(getString(R.string.preference_version_key), currentVersion)
+                    .apply();
             Log.d(LOG_TAG, "Databases version: " + currentVersion);
         } catch (ParseException e) {
             Log.e(LOG_TAG, e.getMessage());

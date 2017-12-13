@@ -45,6 +45,6 @@
         <item>1</item>
     </string-array>
     <string name="preference_version_title">Версия</string>
-    <string name="preference_version_summary">Нажмите, чтобы показать версию</string>
-
+    <string name="preference_version_summary">Нажмите, чтобы показать версию баз данных</string>
+    <string name="version_toast_text">Текущая версия баз данных:</string>
 </resources>

@@ -45,9 +45,9 @@ public class SettingsActivity extends SecondaryActivity {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     Log.d(LOG_TAG, "Update version clicked");
-                    Toast.makeText(getActivity(), "Current databases version: " +
+                    Toast.makeText(getActivity(), getString(R.string.version_toast_text) + " " +
                                     PreferenceManager.getDefaultSharedPreferences(
-                                            getActivity()).getLong("current_version", 1),
+                                            getActivity()).getLong(getString(R.string.preference_version_key), 1),
                             Toast.LENGTH_SHORT).show();
                     return true;
                 }

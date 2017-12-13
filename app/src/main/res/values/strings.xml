@@ -48,4 +48,5 @@
     <string name="preference_version_title">Version</string>
     <string name="preference_version_summary">Click here to show databases version</string>
     <string name="preference_version_key">current_version</string>
+    <string name="version_toast_text">Current databases version:</string>
 </resources>

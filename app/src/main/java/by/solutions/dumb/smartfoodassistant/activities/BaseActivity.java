@@ -11,7 +11,6 @@ public class BaseActivity extends AppCompatActivity {
 
     //region Variables
 
-    private static final String PREFERENCE_KEY_THEME_COLOR = "color_list";
     private static final String DEFAULT_THEME_COLOR = "0";
 
     private ProgressDialog progressDialog;
@@ -35,7 +34,7 @@ public class BaseActivity extends AppCompatActivity {
 
     private int getStyleId() {
         String color = PreferenceManager.getDefaultSharedPreferences(this)
-                .getString(PREFERENCE_KEY_THEME_COLOR, DEFAULT_THEME_COLOR);
+                .getString(getString(R.string.theme_colors_list_key), DEFAULT_THEME_COLOR);
         switch (color) {
             case "1":
                 return R.style.FirstCustomAppTheme;
