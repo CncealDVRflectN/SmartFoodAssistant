@@ -3,7 +3,6 @@ package by.solutions.dumb.smartfoodassistant.activities;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,7 +18,7 @@ import by.solutions.dumb.smartfoodassistant.util.sql.adapters.ShopCursorAdapter;
 import by.solutions.dumb.smartfoodassistant.util.sql.tables.ShopsTable;
 
 
-public class ShopActivity extends AppCompatActivity {
+public class ShopActivity extends SecondaryActivity {
 
     //region Variables
 
@@ -53,7 +52,6 @@ public class ShopActivity extends AppCompatActivity {
         actionBar = getSupportActionBar();
         actionBar.setTitle(shop.getString(shop.getColumnIndexOrThrow(ShopsTable.NAME_COLUMN)));
         actionBar.setSubtitle(shop.getString(shop.getColumnIndexOrThrow(ShopsTable.ADDRESS_COLUMN)));
-        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -83,12 +81,6 @@ public class ShopActivity extends AppCompatActivity {
         });
 
         return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        finish();
-        return true;
     }
 
     //endregion

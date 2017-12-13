@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,7 +35,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import by.solutions.dumb.smartfoodassistant.R;
 import by.solutions.dumb.smartfoodassistant.fragments.AuthSignOutDialogFragment;
 
-public class SignInActivity extends AppCompatActivity {
+public class SignInActivity extends SecondaryActivity {
 
     //region Variables
 
@@ -72,7 +71,6 @@ public class SignInActivity extends AppCompatActivity {
         signInButton = findViewById(R.id.sign_in_button);
         actionBar = getSupportActionBar();
 
-        actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(R.string.title_authentication);
 
         signInButton.setOnClickListener(new View.OnClickListener() {
@@ -131,7 +129,6 @@ public class SignInActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        FirebaseUser user = firebaseAuth.getCurrentUser();
         setResult(RESULT_OK);
         finish();
         return true;

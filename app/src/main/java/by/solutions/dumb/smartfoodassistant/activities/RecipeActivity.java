@@ -3,7 +3,6 @@ package by.solutions.dumb.smartfoodassistant.activities;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,7 +15,7 @@ import by.solutions.dumb.smartfoodassistant.util.sql.tables.IngredientsTable;
 import by.solutions.dumb.smartfoodassistant.util.sql.tables.ProductsTable;
 import by.solutions.dumb.smartfoodassistant.util.sql.tables.RecipesTable;
 
-public class RecipeActivity extends AppCompatActivity {
+public class RecipeActivity extends SecondaryActivity {
 
     //region Variables
 
@@ -51,7 +50,6 @@ public class RecipeActivity extends AppCompatActivity {
 
         actionBar = getSupportActionBar();
         actionBar.setTitle(recipe.getString(recipe.getColumnIndex(RecipesTable.NAME_COLUMN)));
-        actionBar.setDisplayHomeAsUpEnabled(true);
 
         recipeDescriptionView.setText(recipe.getString(recipe.getColumnIndex(RecipesTable.INSTRUCTION_COLUMN)));
 
@@ -71,12 +69,6 @@ public class RecipeActivity extends AppCompatActivity {
             recipeIngredientsContainer.addView(tmpIngredientView);
             ingredients.moveToNext();
         }
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        finish();
-        return true;
     }
 
     //endregion

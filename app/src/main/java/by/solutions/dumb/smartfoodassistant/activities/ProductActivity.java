@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -19,7 +18,7 @@ import by.solutions.dumb.smartfoodassistant.util.sql.tables.ProductsTable;
 import by.solutions.dumb.smartfoodassistant.util.sql.tables.ShopsTable;
 
 
-public class ProductActivity extends AppCompatActivity {
+public class ProductActivity extends SecondaryActivity {
     //region Activity lifecycle
 
     @Override
@@ -42,7 +41,6 @@ public class ProductActivity extends AppCompatActivity {
 
         actionBar = getSupportActionBar();
         actionBar.setTitle(product.getString(product.getColumnIndex(ProductsTable.NAME_COLUMN)));
-        actionBar.setDisplayHomeAsUpEnabled(true);
 
         shopsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -55,12 +53,6 @@ public class ProductActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        finish();
-        return true;
     }
 
     //endregion

@@ -1,9 +1,15 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="DefaultAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="FirstCustomAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/secondColorPrimary</item>
+        <item name="colorPrimaryDark">@color/secondColorPrimaryDark</item>
+        <item name="colorAccent">@color/secondColorAccent</item>
     </style>
 
     <style name="ListElementMedium">
