@@ -32,7 +32,7 @@ class FirebasePutTask extends AsyncTask<String, Void, Void> {
             connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);
             connection.setRequestMethod("PUT");
-            connection.setReadTimeout(10000);
+            connection.setReadTimeout(5000);
             connection.connect();
 
             writer = new PrintWriter(connection.getOutputStream());

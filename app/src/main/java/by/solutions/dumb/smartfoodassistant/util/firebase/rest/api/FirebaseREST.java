@@ -8,6 +8,16 @@ import java.net.URLEncoder;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import io.reactivex.Completable;
+import io.reactivex.CompletableEmitter;
+import io.reactivex.CompletableOnSubscribe;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
+
 public class FirebaseREST {
     private final String LOG_TAG = "FirebaseREST";
     private final String DB_PATH;

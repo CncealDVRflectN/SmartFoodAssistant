@@ -1,6 +1,5 @@
 package by.solutions.dumb.smartfoodassistant.util.firebase.rest.api;
 
-
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -32,7 +31,7 @@ class FirebasePatchTask extends AsyncTask<String, Void, Void> {
             connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);
             connection.setRequestMethod("PATCH");
-            connection.setReadTimeout(10000);
+            connection.setReadTimeout(5000);
             connection.connect();
 
             writer = new PrintWriter(connection.getOutputStream());

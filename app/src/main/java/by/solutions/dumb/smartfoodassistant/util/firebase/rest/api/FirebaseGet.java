@@ -1,18 +1,22 @@
 package by.solutions.dumb.smartfoodassistant.util.firebase.rest.api;
 
-import android.os.AsyncTask;
+
 import android.util.Log;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-class FirebaseDeleteTask extends AsyncTask<Void, Void, Void> {
-    private final String LOG_TAG = "FirebaseDELETE";
+import io.reactivex.Observable;
+
+class FirebaseGet {
+    private final String LOG_TAG = "FirebaseGET";
     private URL url;
 
-    FirebaseDeleteTask(String url) {
+    FirebaseGet(String url) {
         try {
             this.url = new URL(url.trim());
         } catch (MalformedURLException e) {
@@ -20,15 +24,17 @@ class FirebaseDeleteTask extends AsyncTask<Void, Void, Void> {
         }
     }
 
-    @Override
-    protected Void doInBackground(Void... args) {
+    String getData() throws IOException {
         HttpURLConnection connection = null;
+        BufferedReader reader;
+        String line;
+        StringBuilder result = new StringBuilder();
         StringBuilder response = new StringBuilder("Firebase response: ");
 
         try {
             connection = (HttpURLConnection) url.openConnection();
-            connection.setDoOutput(true);
-            connection.setRequestMethod("DELETE");
+            connection.setDoInput(true);
+            connection.setRequestMethod("GET");
             connection.setReadTimeout(5000);
             connection.connect();
 
@@ -37,17 +43,21 @@ class FirebaseDeleteTask extends AsyncTask<Void, Void, Void> {
             response.append(connection.getResponseMessage());
             Log.d(LOG_TAG, response.toString());
 
-            if (connection.getResponseCode() != 200) {
-                Log.e(LOG_TAG, "Something went wrong with Firebase: " + url);
+            if (connection.getResponseCode() == 200) {
+                reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                while ((line = reader.readLine()) != null) {
+                    result.append(line);
+                }
+            } else {
+                Log.e(LOG_TAG, "Can't get data from Firebase: " + url);
+                throw new IOException("Can't get data from Firebase.");
             }
-        } catch (IOException e) {
-            Log.e(LOG_TAG, e.toString());
         } finally {
             if (connection != null) {
                 connection.disconnect();
             }
         }
 
-        return null;
+        return result.toString();
     }
 }

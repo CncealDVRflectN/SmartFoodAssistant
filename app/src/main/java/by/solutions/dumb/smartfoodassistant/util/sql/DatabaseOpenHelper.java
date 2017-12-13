@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.util.Pair;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -219,7 +220,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db) {
+    public void onCreate(final SQLiteDatabase db) {
         FirebaseREST firebaseDB = new FirebaseREST("https://smartfoodassistant.firebaseio.com");
         JSONParser parser = new JSONParser();
         JSONObject shops;
@@ -238,6 +239,13 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        db.execSQL("DROP TABLE IF EXISTS " + PRODUCTS_TABLE.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + RECIPES_TABLE.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + PRICES_TABLE.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + SHOPS_TABLE.TABLE_NAME);
+        for (String id : INGREDIENTS_TABLES.keySet()) {
+            db.execSQL("DROP TABLE IF EXISTS " + INGREDIENTS_TABLES.get(id).TABLE_NAME);
+        }
+        onCreate(db);
     }
 }

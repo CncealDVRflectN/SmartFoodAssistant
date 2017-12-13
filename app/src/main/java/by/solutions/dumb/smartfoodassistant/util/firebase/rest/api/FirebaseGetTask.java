@@ -1,6 +1,5 @@
 package by.solutions.dumb.smartfoodassistant.util.firebase.rest.api;
 
-
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -35,7 +34,7 @@ class FirebaseGetTask extends AsyncTask<Void, Void, String> {
             connection = (HttpURLConnection) url.openConnection();
             connection.setDoInput(true);
             connection.setRequestMethod("GET");
-            connection.setReadTimeout(10000);
+            connection.setReadTimeout(5000);
             connection.connect();
 
             response.append(connection.getResponseCode());
