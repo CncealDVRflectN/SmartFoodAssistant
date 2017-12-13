@@ -1,10 +1,13 @@
 package by.solutions.dumb.smartfoodassistant.activities;
 
+import android.app.AlarmManager;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.ActionBar;
@@ -22,6 +25,7 @@ import java.util.Locale;
 import by.solutions.dumb.smartfoodassistant.R;
 import by.solutions.dumb.smartfoodassistant.fragments.ProductsFragment;
 import by.solutions.dumb.smartfoodassistant.fragments.RecipesFragment;
+import by.solutions.dumb.smartfoodassistant.util.UpdatesReceiver;
 import by.solutions.dumb.smartfoodassistant.util.filters.ProductsFilter;
 import by.solutions.dumb.smartfoodassistant.util.filters.RecipesFilter;
 import by.solutions.dumb.smartfoodassistant.util.sql.DatabasesManager;
@@ -99,6 +103,7 @@ public class MainActivity extends BaseActivity {
                 return false;
             }
         });
+        startUpdatesChecker();
     }
 
     @Override
@@ -228,6 +233,13 @@ public class MainActivity extends BaseActivity {
         } else {
             authItem.setIcon(R.drawable.ic_user_sign_out_white_24dp);
         }
+    }
+
+    private void startUpdatesChecker() {
+        AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        Intent intent = new Intent(this, UpdatesReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+        manager.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), 60000, pendingIntent);
     }
 
     //endregion
