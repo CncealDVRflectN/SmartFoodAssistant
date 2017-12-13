@@ -24,6 +24,10 @@
         <activity android:name=".activities.SettingsActivity" />
         <activity android:name=".activities.SecondaryActivity" />
         <activity android:name=".activities.BaseActivity"/>
+        <receiver android:name=".util.UpdatesReceiver"/>
+        <service android:name=".util.UpdatesChecker"
+            android:enabled="true"
+            android:exported="true"/>
     </application>
 
 </manifest>
