@@ -1,3 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Smart Food Assistant</string>
+
+    <string name="title_recipes">Recipes</string>
+    <string name="title_products">Products</string>
+    <string name="title_favorites">Favorites</string>
+    <string name="title_authentication">Sign in</string>
+    <string name="title_account">Account</string>
+    <string name="title_recipe_ingredients">Ingredients</string>
+    <string name="title_recipe_description">Description</string>
+    <string name="title_settings">Settings</string>
+
+    <string name="product_name">Product name</string>
+    <string name="product_price">Price</string>
+    <string name="product_currency">Currency</string>
+    <string name="recipe_name">Recipe name</string>
+
+    <string name="action_search">Search</string>
+    <string name="action_user">Account</string>
+    <string name="action_sign_out">Sign out</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="shop_address">Address</string>
+
+    <string name="user_login_title">Login:</string>
+    <string name="user_id_title">ID:</string>
+
+    <string name="loading">Loading…</string>
+
+    <string name="sign_out_dialog_title">Sign out</string>
+    <string name="sign_out_dialog_message">Do you really want to exit?</string>
+    <string name="sign_out_dialog_positive">Yes</string>
+    <string name="sign_out_dialog_negative">No</string>
+
+    <string name="preference_category_theme_color">Theme color</string>
+    <string name="theme_colors_list_title">Color</string>
+    <string name="theme_colors_list_summary">Colors will be displayed correctly after app restart</string>
+    <string name="theme_colors_list_key">color_list</string>
+    <string-array name="colors">
+        <item>Red</item>
+        <item>Purple</item>
+    </string-array>
+    <string-array name="color_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+    <string name="preference_version_title">Version</string>
+    <string name="preference_version_summary">Click here to show databases version</string>
+    <string name="preference_version_key">current_version</string>
+    <string name="version_toast_text">Current databases version:</string>
 </resources>

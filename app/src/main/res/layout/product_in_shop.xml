@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="15dp">
+
+    <TextView
+        style="@style/ListElementMedium"
+        android:id="@+id/product_name"
+        android:text="@string/product_name"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        style="@style/ListElementMedium"
+        android:id="@+id/product_price"
+        android:layout_marginEnd="4dp"
+        android:text="@string/product_price"
+        app:layout_constraintRight_toLeftOf="@id/product_currency"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        style="@style/ListElementMedium"
+        android:id="@+id/product_currency"
+        android:text="@string/product_currency"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

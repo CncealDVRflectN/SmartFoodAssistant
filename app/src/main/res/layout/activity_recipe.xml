@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="by.solutions.dumb.smartfoodassistant.activities.RecipeActivity">
+
+    <ScrollView
+        android:id="@+id/recipe_description_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+
+            <TextView
+                android:id="@+id/recipe_ingredients_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@string/title_recipe_ingredients"
+                android:textSize="24sp"/>
+
+            <LinearLayout
+                android:id="@+id/ingredients_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/recipe_ingredients_title"
+                android:orientation="vertical"/>
+
+            <TextView
+                android:id="@+id/recipe_description_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/ingredients_container"
+                android:text="@string/title_recipe_description"
+                android:textSize="24sp"/>
+
+            <TextView
+                android:id="@+id/recipe_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/recipe_description_title"
+                android:textSize="18sp"
+                android:paddingBottom="15dp"/>
+
+        </android.support.constraint.ConstraintLayout>
+
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>
